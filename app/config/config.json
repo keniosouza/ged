@@ -57,7 +57,7 @@
     "environment": "development",
     "database": {
       "production": {
-        "host": "db",
+        "host": "dbb",
         "name": "ged",
         "port": "3306",
         "user": "root",

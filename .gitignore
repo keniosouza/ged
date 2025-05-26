@@ -1,0 +1,5 @@
+# Ignora a pasta de arquivos armazenados
+app/storage/files/
+
+# Ignora a pasta de arquivos temporários
+app/storage/temp/

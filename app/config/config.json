@@ -4,7 +4,7 @@
     "version": "1",
     "release": "0.1",
     "name": "Docverse",
-    "url_application": "http://localhost/docverso/app/",
+    "url_application": "https://ged.servicodiario.com.br/",
     "delay": 0,
     "security": {
       "session_time": "30",

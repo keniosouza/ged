@@ -4,7 +4,7 @@
 
 use src\model\Files;
 use src\controller\api\ApiHandling;
-use src\controller\Files\FilesValidate;
+use src\controller\files\FilesValidate;
 
 try {
 

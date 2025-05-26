@@ -47,7 +47,7 @@
     },
     "api": {
       "docverse": {
-        "url": "http://127.0.0.1:8000/",
+        "url": "https://apiged.servicodiario.com.br/",
         "access": {
           "auth_email": "kenio@outlook.com",
           "auth_password": "J9^!2.n7ij+8h 99|)d2v/o/ym?h?:"

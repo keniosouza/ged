@@ -65,11 +65,11 @@
         "charset": "utf8"
       },
       "development": {
-        "host": "localhost",
+        "host": "mysql://mysql:sun147oi@api_mysql:3306/ged",
         "name": "ged",
         "port": "3306",
-        "user": "root",
-        "password": "root",
+        "user": "mysql",
+        "password": "sun147oi",
         "charset": "utf8"
       }
     },

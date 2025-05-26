@@ -65,7 +65,7 @@
         "charset": "utf8"
       },
       "development": {
-        "host": "mysql://mysql:sun147oi@api_mysql:3306/ged",
+        "host": "api_mysql",
         "name": "ged",
         "port": "3306",
         "user": "mysql",

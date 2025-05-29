@@ -14,8 +14,11 @@ RUN apt-get update && apt-get install -y \
     libzip-dev \
     && docker-php-ext-install pdo pdo_mysql mysqli zip
 
-# Habilita módulo de reescrita do Apache (útil para Laravel ou outros frameworks)
+# Habilita o módulo de reescrita do Apache (útil para Laravel ou outros frameworks)
 RUN a2enmod rewrite
+
+# Substitui a configuração padrão do Apache para permitir .htaccess
+COPY ./apache/000-default.conf /etc/apache2/sites-available/000-default.conf
 
 # Copia os arquivos do projeto para a pasta padrão do Apache
 COPY . /var/www/html/

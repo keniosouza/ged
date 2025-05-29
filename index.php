@@ -239,12 +239,12 @@ if (!is_null($newPassword) && !is_null($hash)) {
                                             Esqueceu a senha?
 
                                             <div class="text-center pt-2">
-                                                <a class="btn btn-light" href="#" id="btnReset" onclick='validateForm("#UsersLoginForm", `{"request": {"path" : "action/users/users_reset"}, 
+                                                <button class="btn btn-light" id="btnReset" onclick='validateForm("#UsersLoginForm", `{"request": {"path" : "action/users/users_reset"}, 
                                                                                                                         "loader" : {"type" : 1, "target" : "btnReset"}, 
                                                                                                                         "form" : "UsersLoginForm", 
                                                                                                                         "response" : {"target" : "UsersResetFormResponse"}}`, "app")'>
                                                     Solicitar nova senha
-                                                </a>
+                                                </button>
                                                 <span id="UsersResetFormResponse"></span>
                                             </div>
 

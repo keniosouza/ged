@@ -2,8 +2,8 @@ RewriteEngine on
 RewriteBase /
 
 # Adiciona www. no prefixo do domínio
-RewriteCond %{HTTP_HOST} !^www\. [NC]
-RewriteRule ^ https://www.%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
+# RewriteCond %{HTTP_HOST} !^www\. [NC]
+# RewriteRule ^ https://www.%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
 
 DirectoryIndex index.php
 

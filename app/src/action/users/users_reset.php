@@ -22,7 +22,7 @@ try {
     $csrfToken = isset($_POST['csrf_token']) ? (string)filter_input(INPUT_POST, 'csrf_token', FILTER_SANITIZE_SPECIAL_CHARS) : null;
 
     /** Verifica se o Token CSRF é válido */
-    if ($csrfToken === $_SESSION['csrf_token']) {
+    if (isset($_SESSION['csrf_token']) && $csrfToken === $_SESSION['csrf_token']) {
 
         /** Validando os campos de entrada */
         $UsersValidate->setEmail($email);

@@ -65,7 +65,7 @@ class Logs
                                        :date_register)';
 
         /** Preparo o SQL */
-        $this->stmt = $this->connection->connect()->prepare($this->sql);
+        $this->stmt = $this->connection->prepare($this->sql);
 
         /** Preencho os valores do sql */
         $this->stmt->bindParam(':log_id', $this->logId, $this->logId > 0 ? \PDO::PARAM_INT : \PDO::PARAM_NULL);
@@ -93,7 +93,7 @@ class Logs
                       ORDER BY l.log_id DESC';
 
         /** Prepara a consulta SQL utilizando a conexão estabelecida. */
-        $this->stmt = $this->connection->connect()->prepare($this->sql);
+        $this->stmt = $this->connection->prepare($this->sql);
 
         //Ajusto para pesquisa partes de palavras
         $request = '%' . $request . '%';
@@ -120,7 +120,7 @@ class Logs
                       limit 10';
 
         /** Prepara a consulta SQL utilizando a conexão estabelecida. */
-        $this->stmt = $this->connection->connect()->prepare($this->sql);
+        $this->stmt = $this->connection->prepare($this->sql);
 
         //Ajusto para pesquisa partes de palavras
         $request = '%' . $request . '%';
@@ -146,7 +146,7 @@ class Logs
                       LIMIT 100';
 
         /** Prepara a consulta SQL utilizando a conexão estabelecida. */
-        $this->stmt = $this->connection->connect()->prepare($this->sql);
+        $this->stmt = $this->connection->prepare($this->sql);
 
         /** Preencho os parâmetros do SQL */
         $this->stmt->bindParam(':companyId', $companyId, \PDO::PARAM_STR);
@@ -170,7 +170,7 @@ class Logs
                         LIMIT 1;';
 
         /** Prepara a consulta SQL utilizando a conexão estabelecida. */
-        $this->stmt = $this->connection->connect()->prepare($this->sql);
+        $this->stmt = $this->connection->prepare($this->sql);
 
         // Ajusto para pesquisa partes de palavras
         $request = '%' . $request . '%';
@@ -200,7 +200,7 @@ class Logs
                             date_register_formated;';
 
         /** Prepara a consulta SQL utilizando a conexão estabelecida. */
-        $this->stmt = $this->connection->connect()->prepare($this->sql);
+        $this->stmt = $this->connection->prepare($this->sql);
 
         /** Preencho os parâmetros do SQL */
         $this->stmt->bindParam(':companyId', $companyId, \PDO::PARAM_STR);

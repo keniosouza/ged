@@ -34,7 +34,7 @@ class ModulesAcls
                       JOIN modules m ON ma.module_id = m.module_id';
 
         /** Prepara a consulta SQL utilizando a conexão estabelecida */
-        $this->stmt = $this->connection->connect()->prepare($this->sql);
+        $this->stmt = $this->connection->prepare($this->sql);
 
         /** Executa a consulta SQL */
         $this->stmt->execute();
@@ -50,7 +50,7 @@ class ModulesAcls
         $this->sql = 'SELECT * FROM modules_acls ma WHERE ma.module_id = :moduleId';
 
         /** Prepara a consulta SQL utilizando a conexão estabelecida */
-        $this->stmt = $this->connection->connect()->prepare($this->sql);
+        $this->stmt = $this->connection->prepare($this->sql);
 
         /** Preenche os parâmetros do SQL */
         $this->stmt->bindParam(':moduleId', $moduleId);
@@ -69,7 +69,7 @@ class ModulesAcls
         $this->sql = 'SELECT * FROM modules_acls WHERE module_acl_id = :moduleAclId';
 
         /** Prepara a consulta SQL utilizando a conexão estabelecida */
-        $this->stmt = $this->connection->connect()->prepare($this->sql);
+        $this->stmt = $this->connection->prepare($this->sql);
 
         /** Preenche os parâmetros do SQL */
         $this->stmt->bindParam(':moduleAclId', $moduleAclId);
@@ -90,7 +90,7 @@ class ModulesAcls
                       ON DUPLICATE KEY UPDATE `module_id` = :moduleId, `description` = :description, `preferences` = :preferences;';
 
         /** Prepara o SQL para receber os valores */
-        $this->stmt = $this->connection->connect()->prepare($this->sql);
+        $this->stmt = $this->connection->prepare($this->sql);
 
         /** Preenche os parâmetros do SQL */
         $this->stmt->bindParam(':moduleAclId', $moduleAclId);
@@ -109,7 +109,7 @@ class ModulesAcls
         $this->sql = 'DELETE FROM modules_acls WHERE module_acl_id = :moduleAclId';
 
         /** Prepara a consulta SQL utilizando a conexão estabelecida */
-        $this->stmt = $this->connection->connect()->prepare($this->sql);
+        $this->stmt = $this->connection->prepare($this->sql);
 
         /** Preenche os parâmetros do SQL */
         $this->stmt->bindParam(':moduleAclId', $moduleAclId);

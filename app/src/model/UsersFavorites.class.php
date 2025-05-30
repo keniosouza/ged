@@ -35,7 +35,7 @@ class UsersFavorites
         $this->sql = 'INSERT INTO users_favorites (`user_favorite_id`, `user_id`, `table`, `register_id`) value (:userFavoriteId, :userId, :table, :registerId)';
 
         /** Preparo o sql para receber os valores */
-        $this->stmt = $this->connection->connect()->prepare($this->sql);
+        $this->stmt = $this->connection->prepare($this->sql);
 
         /** Preencho os parâmetros do SQL */
         $this->stmt->bindParam(':userFavoriteId', $userFavoriteId);
@@ -56,7 +56,7 @@ class UsersFavorites
         $this->sql = 'select register_id from users_favorites uf where uf.table = :table ';
 
         /** Prepara a consulta SQL utilizando a conexão estabelecida. */
-        $this->stmt = $this->connection->connect()->prepare($this->sql);
+        $this->stmt = $this->connection->prepare($this->sql);
 
         /** Preencho os parâmetros do SQL */
         $this->stmt->bindParam(':table', $table);
@@ -77,7 +77,7 @@ class UsersFavorites
         $this->sql = 'select * from companies where company_id = :companyId';
 
         /** Prepara a consulta SQL utilizando a conexão estabelecida. */
-        $this->stmt = $this->connection->connect()->prepare($this->sql);
+        $this->stmt = $this->connection->prepare($this->sql);
 
         /** Preencho os parâmetros do SQL */
         $this->stmt->bindParam(':companyId', $companyId);
@@ -102,7 +102,7 @@ class UsersFavorites
                       limit 1';
 
         /** Prepara a consulta SQL utilizando a conexão estabelecida. */
-        $this->stmt = $this->connection->connect()->prepare($this->sql);
+        $this->stmt = $this->connection->prepare($this->sql);
 
         /** Preencho os parâmetros do SQL */
         $this->stmt->bindParam(':userId', $userId);
@@ -128,7 +128,7 @@ class UsersFavorites
                       and uf.register_id = :registerId';
 
         /** Prepara a consulta SQL utilizando a conexão estabelecida. */
-        $this->stmt = $this->connection->connect()->prepare($this->sql);
+        $this->stmt = $this->connection->prepare($this->sql);
 
         /** Preencho os parâmetros do SQL */
         $this->stmt->bindParam(':userId', $userId);

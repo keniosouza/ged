@@ -32,7 +32,7 @@ class UsersAcls
         $this->sql = 'SELECT * FROM users_acls';
 
         /** Prepara a consulta SQL utilizando a conexão estabelecida */
-        $this->stmt = $this->connection->connect()->prepare($this->sql);
+        $this->stmt = $this->connection->prepare($this->sql);
 
         /** Executa a consulta SQL */
         $this->stmt->execute();
@@ -55,7 +55,7 @@ class UsersAcls
                       WHERE ua.user_id = :userId';
 
         /** Prepara a consulta SQL utilizando a conexão estabelecida */
-        $this->stmt = $this->connection->connect()->prepare($this->sql);
+        $this->stmt = $this->connection->prepare($this->sql);
 
         /** Preenche os parâmetros do SQL */
         $this->stmt->bindParam(':userId', $userId);
@@ -74,7 +74,7 @@ class UsersAcls
         $this->sql = 'SELECT * FROM users_acls WHERE user_acl_id = :userAclId';
 
         /** Prepara a consulta SQL utilizando a conexão estabelecida */
-        $this->stmt = $this->connection->connect()->prepare($this->sql);
+        $this->stmt = $this->connection->prepare($this->sql);
 
         /** Preenche os parâmetros do SQL */
         $this->stmt->bindParam(':userAclId', $userAclId);
@@ -95,7 +95,7 @@ class UsersAcls
                       ON DUPLICATE KEY UPDATE `module_acl_id` = :moduleAclId, `user_id` = :userId;';
 
         /** Prepara o SQL para receber os valores */
-        $this->stmt = $this->connection->connect()->prepare($this->sql);
+        $this->stmt = $this->connection->prepare($this->sql);
 
         /** Preenche os parâmetros do SQL */
         $this->stmt->bindParam(':userAclId', $userAclId);
@@ -112,7 +112,7 @@ class UsersAcls
         $this->sql = 'DELETE FROM users_acls WHERE user_acl_id = :userAclId';
 
         /** Prepara a consulta SQL utilizando a conexão estabelecida */
-        $this->stmt = $this->connection->connect()->prepare($this->sql);
+        $this->stmt = $this->connection->prepare($this->sql);
 
         /** Preenche os parâmetros do SQL */
         $this->stmt->bindParam(':userAclId', $userAclId);

@@ -46,7 +46,7 @@ class FilesCategories
         $this->sql = "describe files_categories";
 
         /** Preparo o SQL para execução */
-        $this->stmt = $this->connection->connect()->prepare($this->sql);
+        $this->stmt = $this->connection->prepare($this->sql);
 
         /** Executo o SQL */
         $this->stmt->execute();
@@ -107,7 +107,7 @@ class FilesCategories
                                               `user_id_update` = ' . $this->userId . ';';
 
         /** Preparo o sql para receber os valores */
-        $this->stmt = $this->connection->connect()->prepare($this->sql);
+        $this->stmt = $this->connection->prepare($this->sql);
 
         /** Preencho os parâmetros do SQL */
         $this->stmt->bindParam(':file_category_id', $fileCategoryId);
@@ -139,7 +139,7 @@ class FilesCategories
         }
 
         /** Prepara a consulta SQL utilizando a conexão estabelecida. */
-        $this->stmt = $this->connection->connect()->prepare($this->sql);
+        $this->stmt = $this->connection->prepare($this->sql);
 
         /** Verifica se a consulta foi informada */
         if (!empty($this->search)) {
@@ -184,7 +184,7 @@ class FilesCategories
         }
 
         /** Prepara a consulta SQL utilizando a conexão estabelecida. */
-        $this->stmt = $this->connection->connect()->prepare($this->sql);
+        $this->stmt = $this->connection->prepare($this->sql);
 
         /** Verifica se a categoria foi informada */
         if ($this->fileCategoryId > 0) {
@@ -241,7 +241,7 @@ class FilesCategories
         $this->sql .= $this->limit;
 
         /** Prepara a consulta SQL utilizando a conexão estabelecida. */
-        $this->stmt = $this->connection->connect()->prepare($this->sql);
+        $this->stmt = $this->connection->prepare($this->sql);
 
         /** Verifica se a consulta foi informada */
         if (!empty($this->search)) {
@@ -269,7 +269,7 @@ class FilesCategories
                       where file_category_id = :file_category_id';
 
         /** Prepara a consulta SQL utilizando a conexão estabelecida. */
-        $this->stmt = $this->connection->connect()->prepare($this->sql);
+        $this->stmt = $this->connection->prepare($this->sql);
 
         /** Preencho os parâmetros do SQL */
         $this->stmt->bindParam(':file_category_id', $this->fileCategoryId);
@@ -293,7 +293,7 @@ class FilesCategories
                       where file_type_id = :file_type_id';
 
         /** Prepara a consulta SQL utilizando a conexão estabelecida. */
-        $this->stmt = $this->connection->connect()->prepare($this->sql);
+        $this->stmt = $this->connection->prepare($this->sql);
 
         /** Preencho os parâmetros do SQL */
         $this->stmt->bindParam(':file_type_id', $this->fileTypeId);
@@ -322,7 +322,7 @@ class FilesCategories
                       where file_category_id = :file_category_id';
 
         /** Prepara a consulta SQL utilizando a conexão estabelecida. */
-        $this->stmt = $this->connection->connect()->prepare($this->sql);
+        $this->stmt = $this->connection->prepare($this->sql);
 
         /** Preencho os parâmetros do SQL */
         $this->stmt->bindParam(':file_category_id', $this->fileCategoryId);

@@ -53,7 +53,7 @@ class Batchs
 		$this->sql = "describe batchs";
 
 		/** Preparo o SQL para execução */
-		$this->stmt = $this->connection->connect()->prepare($this->sql);
+		$this->stmt = $this->connection->prepare($this->sql);
 
 		/** Executo o SQL */
 		$this->stmt->execute();
@@ -91,7 +91,7 @@ class Batchs
 					  where batch_id = :batch_id';
 
 		/** Preparo o SQL para execução */
-		$this->stmt = $this->connection->connect()->prepare($this->sql);
+		$this->stmt = $this->connection->prepare($this->sql);
 
 		/** Preencho os parâmetros do SQL */
 		$this->stmt->bindParam(':batch_id', $this->batchId);
@@ -142,7 +142,7 @@ class Batchs
 		$this->sql .= $this->limit;
 
 		/** Preparo o SQL para execução */
-		$this->stmt = $this->connection->connect()->prepare($this->sql);
+		$this->stmt = $this->connection->prepare($this->sql);
 
 		/** Verifica se a consulta foi informada */
 		if (!empty($this->search)) {
@@ -176,7 +176,7 @@ class Batchs
 		}
 
 		/** Preparo o SQL para execução */
-		$this->stmt = $this->connection->connect()->prepare($this->sql);
+		$this->stmt = $this->connection->prepare($this->sql);
 
 		/** Verifica se a consulta foi informada */
 		if (!empty($this->search)) {
@@ -232,7 +232,7 @@ class Batchs
                                               `status` = :status;';
 
 		/** Preparo o sql para receber os valores */
-		$this->stmt = $this->connection->connect()->prepare($this->sql);
+		$this->stmt = $this->connection->prepare($this->sql);
 
 		/** Preencho os parâmetros do SQL */
 		$this->stmt->bindParam('batch_id', $this->batchId);
@@ -259,7 +259,7 @@ class Batchs
 					  where  batch_id = :batch_id';
 
 		/** Preparo o sql para receber os valores */
-		$this->stmt = $this->connection->connect()->prepare($this->sql);
+		$this->stmt = $this->connection->prepare($this->sql);
 
 		/** Preencho os parâmetros do SQL */
 		$this->stmt->bindParam('batch_id', $this->batchId);

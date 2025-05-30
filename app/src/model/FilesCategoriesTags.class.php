@@ -48,7 +48,7 @@ class FilesCategoriesTags
         $this->sql = "describe files_categories_tags";
 
         /** Preparo o SQL para execução */
-        $this->stmt = $this->connection->connect()->prepare($this->sql);
+        $this->stmt = $this->connection->prepare($this->sql);
 
         /** Executo o SQL */
         $this->stmt->execute();
@@ -113,7 +113,7 @@ class FilesCategoriesTags
                                               `user_id_update` = ' . $this->userId . ';';
 
         /** Preparo o sql para receber os valores */
-        $this->stmt = $this->connection->connect()->prepare($this->sql);
+        $this->stmt = $this->connection->prepare($this->sql);
 
         /** Preencho os parâmetros do SQL */
         $this->stmt->bindParam(':file_category_tag_id', $this->fileCategoryTagId);
@@ -189,7 +189,7 @@ class FilesCategoriesTags
         $this->sql .= $this->limit;
 
         /** Prepara a consulta SQL utilizando a conexão estabelecida. */
-        $this->stmt = $this->connection->connect()->prepare($this->sql);
+        $this->stmt = $this->connection->prepare($this->sql);
 
         /** Verifica se a consulta foi informada */
         if (!empty($this->search)) {
@@ -241,7 +241,7 @@ class FilesCategoriesTags
                       where fct.file_category_id = :file_category_id';
 
         /** Prepara a consulta SQL utilizando a conexão estabelecida. */
-        $this->stmt = $this->connection->connect()->prepare($this->sql);
+        $this->stmt = $this->connection->prepare($this->sql);
 
         /** Preencho os parâmetros do SQL */
         $this->stmt->bindParam(':file_category_id', $this->fileCategoryId);
@@ -265,7 +265,7 @@ class FilesCategoriesTags
                       where file_category_tag_id = :file_category_tag_id';
 
         /** Prepara a consulta SQL utilizando a conexão estabelecida. */
-        $this->stmt = $this->connection->connect()->prepare($this->sql);
+        $this->stmt = $this->connection->prepare($this->sql);
 
         /** Preencho os parâmetros do SQL */
         $this->stmt->bindParam(':file_category_tag_id', $this->fileCategoryTagId);
@@ -314,7 +314,7 @@ class FilesCategoriesTags
         }
 
         /** Prepara a consulta SQL utilizando a conexão estabelecida. */
-        $this->stmt = $this->connection->connect()->prepare($this->sql);
+        $this->stmt = $this->connection->prepare($this->sql);
 
         /** Verifica se a consulta foi informada */
         if (!empty($this->search)) {
@@ -360,7 +360,7 @@ class FilesCategoriesTags
                       where file_category_tag_id = :file_category_tag_id';
 
         /** Prepara a consulta SQL utilizando a conexão estabelecida. */
-        $this->stmt = $this->connection->connect()->prepare($this->sql);
+        $this->stmt = $this->connection->prepare($this->sql);
 
         /** Preencho os parâmetros do SQL */
         $this->stmt->bindParam(':file_category_tag_id', $this->fileCategoryTagId);

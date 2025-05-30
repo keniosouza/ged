@@ -64,7 +64,7 @@ class Files
                                          :company_id);';
 
         /** Preparo o sql para receber os valores */
-        $this->stmt = $this->connection->connect()->prepare($this->sql);
+        $this->stmt = $this->connection->prepare($this->sql);
 
         /** Preencho os parâmetros do SQL */
         $this->stmt->bindParam(':file_id', $this->fileId);
@@ -74,7 +74,7 @@ class Files
         $this->stmt->execute();
 
         /** Retorno o ultimo id gerado */
-        return $this->connection->connect()->lastInsertId();
+        return $this->connection->lastInsertId();
     }
 
     /** Salva o arquivo junto ao banco de dados */
@@ -120,7 +120,7 @@ class Files
                                               `path` = :path;';
 
         /** Preparo o sql para receber os valores */
-        $this->stmt = $this->connection->connect()->prepare($this->sql);
+        $this->stmt = $this->connection->prepare($this->sql);
 
         /** Preencho os parâmetros do SQL */
         $this->stmt->bindParam(':fileId', $this->fileId);
@@ -147,7 +147,7 @@ class Files
                       WHERE f.file_id = :fileId';
 
         /** Preparo o sql para receber os valores */
-        $this->stmt = $this->connection->connect()->prepare($this->sql);
+        $this->stmt = $this->connection->prepare($this->sql);
 
         /** Preencho os parâmetros do SQL */
         $this->stmt->bindParam(':fileId', $fileId);
@@ -179,7 +179,7 @@ class Files
                       WHERE f.file_id = :file_id';
 
         /** Preparo o sql para receber os valores */
-        $this->stmt = $this->connection->connect()->prepare($this->sql);
+        $this->stmt = $this->connection->prepare($this->sql);
 
         /** Preencho os parâmetros do SQL */
         $this->stmt->bindParam(':file_id', $this->fileId);
@@ -206,7 +206,7 @@ class Files
                       WHERE f.file_id = :fileId';
 
         /** Preparo o sql para receber os valores */
-        $this->stmt = $this->connection->connect()->prepare($this->sql);
+        $this->stmt = $this->connection->prepare($this->sql);
 
         /** Preencho os parâmetros do SQL */
         $this->stmt->bindParam(':fileId', $this->fileId);
@@ -231,7 +231,7 @@ class Files
                       WHERE f.file_id = :fileId';
 
         /** Preparo o sql para receber os valores */
-        $this->stmt = $this->connection->connect()->prepare($this->sql);
+        $this->stmt = $this->connection->prepare($this->sql);
 
         /** Preencho os parâmetros do SQL */
         $this->stmt->bindParam(':fileId', $this->fileId);
@@ -292,7 +292,7 @@ class Files
         $this->sql .= $this->limit;
 
         /** Prepara a consulta SQL utilizando a conexão estabelecida. */
-        $this->stmt = $this->connection->connect()->prepare($this->sql);
+        $this->stmt = $this->connection->prepare($this->sql);
 
         /** Verifica se a consulta foi informada */
         if (!empty($this->search)) {
@@ -323,7 +323,7 @@ class Files
         $this->sql = "SELECT * FROM files f WHERE f.file_id IN ({$this->placeholders})";
 
         /** Prepara a consulta SQL utilizando a conexão estabelecida */
-        $this->stmt = $this->connection->connect()->prepare($this->sql);
+        $this->stmt = $this->connection->prepare($this->sql);
 
         /** Executa a consulta SQL com o array de IDs sendo passados como parâmetros */
         $this->stmt->execute($this->fileIds);
@@ -346,7 +346,7 @@ class Files
                       where f.folder_id = :folderId ';
 
         /** Prepara a consulta SQL utilizando a conexão estabelecida. */
-        $this->stmt = $this->connection->connect()->prepare($this->sql);
+        $this->stmt = $this->connection->prepare($this->sql);
 
         /** Preencho os parâmetros do SQL */
         $this->stmt->bindParam(':folderId', $this->folderId);
@@ -378,7 +378,7 @@ class Files
         }
 
         /** Prepara a consulta SQL utilizando a conexão estabelecida. */
-        $this->stmt = $this->connection->connect()->prepare($this->sql);
+        $this->stmt = $this->connection->prepare($this->sql);
 
         /** Verifica se a consulta foi informada */
         if (!empty($this->search)) {
@@ -427,7 +427,7 @@ class Files
                       where file_id = :file_id';
 
         /** Prepara a consulta SQL utilizando a conexão estabelecida. */
-        $this->stmt = $this->connection->connect()->prepare($this->sql);
+        $this->stmt = $this->connection->prepare($this->sql);
 
         /** Preencho os parâmetros do SQL */
         $this->stmt->bindParam(':file_id', $this->fileId);
@@ -452,7 +452,7 @@ class Files
                       WHERE f.name like :name;';
 
         /** Prepara a consulta SQL utilizando a conexão estabelecida. */
-        $this->stmt = $this->connection->connect()->prepare($this->sql);
+        $this->stmt = $this->connection->prepare($this->sql);
 
         /** Preencho os parâmetros do SQL */
         $this->stmt->bindParam(':name', $this->search, \PDO::PARAM_STR);
@@ -477,7 +477,7 @@ class Files
                       WHERE f.content like :data;';
 
         /** Prepara a consulta SQL utilizando a conexão estabelecida. */
-        $this->stmt = $this->connection->connect()->prepare($this->sql);
+        $this->stmt = $this->connection->prepare($this->sql);
 
         /** Preencho os parâmetros do SQL */
         $this->stmt->bindParam(':data', $this->data, \PDO::PARAM_STR);
@@ -505,7 +505,7 @@ class Files
                       like '%{$this->search}%';";
 
         /** Prepara a consulta SQL utilizando a conexão estabelecida. */
-        $this->stmt = $this->connection->connect()->prepare($this->sql);
+        $this->stmt = $this->connection->prepare($this->sql);
 
         /** Executa a consulta SQL. */
         $this->stmt->execute();
@@ -532,7 +532,7 @@ class Files
                       where file_id = :file_id';
 
         /** Prepara a consulta SQL utilizando a conexão estabelecida. */
-        $this->stmt = $this->connection->connect()->prepare($this->sql);
+        $this->stmt = $this->connection->prepare($this->sql);
 
         /** Preencho os parâmetros do SQL */
         $this->stmt->bindParam(':file_id', $fileId);

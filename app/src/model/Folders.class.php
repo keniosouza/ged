@@ -35,7 +35,7 @@ class Folders
                       ON DUPLICATE KEY UPDATE `company_id` = :companyId, `parent_id` = :parentId, `name` = :name, `description` = :description;';
 
         /** Preparo o sql para receber os valores */
-        $this->stmt = $this->connection->connect()->prepare($this->sql);
+        $this->stmt = $this->connection->prepare($this->sql);
 
         /** Preencho os parâmetros do SQL */
         $this->stmt->bindParam(':folderId', $folderId, $folderId > 0 ? \PDO::PARAM_INT : \PDO::PARAM_NULL);
@@ -57,7 +57,7 @@ class Folders
         $this->sql = 'select * from folders';
 
         /** Prepara a consulta SQL utilizando a conexão estabelecida. */
-        $this->stmt = $this->connection->connect()->prepare($this->sql);
+        $this->stmt = $this->connection->prepare($this->sql);
 
         /** Executa a consulta SQL. */
         $this->stmt->execute();
@@ -77,7 +77,7 @@ class Folders
         $this->sql = "SELECT * FROM folders f WHERE f.folder_id IN ($placeholders)";
 
         /** Prepara a consulta SQL utilizando a conexão estabelecida */
-        $this->stmt = $this->connection->connect()->prepare($this->sql);
+        $this->stmt = $this->connection->prepare($this->sql);
 
         /** Executa a consulta SQL com o array de IDs sendo passados como parâmetros */
         $this->stmt->execute($fileIds);
@@ -96,7 +96,7 @@ class Folders
         $this->sql = 'select * from folders where folder_id = :folderId';
 
         /** Prepara a consulta SQL utilizando a conexão estabelecida. */
-        $this->stmt = $this->connection->connect()->prepare($this->sql);
+        $this->stmt = $this->connection->prepare($this->sql);
 
         /** Preencho os parâmetros do SQL */
         $this->stmt->bindParam(':folderId', $folderId);
@@ -117,7 +117,7 @@ class Folders
         $this->sql = 'delete from folders f where f.folder_id = :folderId';
 
         /** Prepara a consulta SQL utilizando a conexão estabelecida. */
-        $this->stmt = $this->connection->connect()->prepare($this->sql);
+        $this->stmt = $this->connection->prepare($this->sql);
 
         /** Preencho os parâmetros do SQL */
         $this->stmt->bindParam(':folderId', $folderId);

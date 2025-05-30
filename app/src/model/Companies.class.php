@@ -45,7 +45,7 @@ class Companies
         $this->sql = "describe companies";
 
         /** Preparo o SQL para execução */
-        $this->stmt = $this->connection->connect()->prepare($this->sql);
+        $this->stmt = $this->connection->prepare($this->sql);
 
         /** Executo o SQL */
         $this->stmt->execute();
@@ -94,7 +94,7 @@ class Companies
                                               `status` = :status;';
 
         /** Preparo o sql para receber os valores */
-        $this->stmt = $this->connection->connect()->prepare($this->sql);
+        $this->stmt = $this->connection->prepare($this->sql);
 
         /** Preencho os parâmetros do SQL */
         $this->stmt->bindParam(':companyId', $companyId);
@@ -130,7 +130,7 @@ class Companies
         }
 
         /** Prepara a consulta SQL utilizando a conexão estabelecida. */
-        $this->stmt = $this->connection->connect()->prepare($this->sql);
+        $this->stmt = $this->connection->prepare($this->sql);
 
         /** Verifica se a consulta foi informada */
         if (!empty($this->search)) {
@@ -172,7 +172,7 @@ class Companies
         $this->sql .= $this->limit;
 
         /** Prepara a consulta SQL utilizando a conexão estabelecida. */
-        $this->stmt = $this->connection->connect()->prepare($this->sql);
+        $this->stmt = $this->connection->prepare($this->sql);
 
         /** Verifica se a consulta foi informada */
         if (!empty($this->search)) {
@@ -199,7 +199,7 @@ class Companies
         $this->sql = 'select * from companies where company_id = :companyId';
 
         /** Prepara a consulta SQL utilizando a conexão estabelecida. */
-        $this->stmt = $this->connection->connect()->prepare($this->sql);
+        $this->stmt = $this->connection->prepare($this->sql);
 
         /** Preencho os parâmetros do SQL */
         $this->stmt->bindParam(':companyId', $this->companyId);
@@ -224,7 +224,7 @@ class Companies
                       where company_id = :companyId';
 
         /** Prepara a consulta SQL utilizando a conexão estabelecida. */
-        $this->stmt = $this->connection->connect()->prepare($this->sql);
+        $this->stmt = $this->connection->prepare($this->sql);
 
         /** Preencho os parâmetros do SQL */
         $this->stmt->bindParam(':companyId', $this->companyId);

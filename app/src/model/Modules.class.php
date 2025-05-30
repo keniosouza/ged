@@ -46,7 +46,7 @@ class Modules
         $this->sql = "describe modules";
 
         /** Preparo o SQL para execução */
-        $this->stmt = $this->connection->connect()->prepare($this->sql);
+        $this->stmt = $this->connection->prepare($this->sql);
 
         /** Executo o SQL */
         $this->stmt->execute();
@@ -91,7 +91,7 @@ class Modules
         }
 
         /** Prepara a consulta SQL utilizando a conexão estabelecida. */
-        $this->stmt = $this->connection->connect()->prepare($this->sql);
+        $this->stmt = $this->connection->prepare($this->sql);
 
         /** Verifica se a consulta foi informada */
         if (!empty($this->search)) {
@@ -134,7 +134,7 @@ class Modules
         $this->sql .= $this->limit;
 
         /** Prepara a consulta SQL utilizando a conexão estabelecida */
-        $this->stmt = $this->connection->connect()->prepare($this->sql);
+        $this->stmt = $this->connection->prepare($this->sql);
 
         /** Verifica se a consulta foi informada */
         if (!empty($this->search)) {
@@ -157,7 +157,7 @@ class Modules
         $this->sql = 'SELECT * FROM modules WHERE module_id = :moduleId';
 
         /** Prepara a consulta SQL utilizando a conexão estabelecida */
-        $this->stmt = $this->connection->connect()->prepare($this->sql);
+        $this->stmt = $this->connection->prepare($this->sql);
 
         /** Preenche os parâmetros do SQL */
         $this->stmt->bindParam(':moduleId', $moduleId);
@@ -176,7 +176,7 @@ class Modules
         $this->sql = 'SELECT * FROM modules WHERE company_id = :companyId';
 
         /** Prepara a consulta SQL utilizando a conexão estabelecida */
-        $this->stmt = $this->connection->connect()->prepare($this->sql);
+        $this->stmt = $this->connection->prepare($this->sql);
 
         /** Preenche os parâmetros do SQL */
         $this->stmt->bindParam(':companyId', $companyId);
@@ -227,7 +227,7 @@ class Modules
                                               `status` = :status;';
 
         /** Prepara o SQL para receber os valores */
-        $this->stmt = $this->connection->connect()->prepare($this->sql);
+        $this->stmt = $this->connection->prepare($this->sql);
 
         /** Preenche os parâmetros do SQL */
         $this->stmt->bindParam(':module_id', $this->moduleId);
@@ -254,7 +254,7 @@ class Modules
                       WHERE module_id = :moduleId';
 
         /** Prepara a consulta SQL utilizando a conexão estabelecida */
-        $this->stmt = $this->connection->connect()->prepare($this->sql);
+        $this->stmt = $this->connection->prepare($this->sql);
 
         /** Preenche os parâmetros do SQL */
         $this->stmt->bindParam(':moduleId', $this->moduleId);

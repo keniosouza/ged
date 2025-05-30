@@ -46,7 +46,7 @@ class FilesTypes
         $this->sql = "describe files_types";
 
         /** Preparo o SQL para execução */
-        $this->stmt = $this->connection->connect()->prepare($this->sql);
+        $this->stmt = $this->connection->prepare($this->sql);
 
         /** Executo o SQL */
         $this->stmt->execute();
@@ -106,7 +106,7 @@ class FilesTypes
                                               `user_id_update` = ' . $this->userId . ';';
 
         /** Preparo o sql para receber os valores */
-        $this->stmt = $this->connection->connect()->prepare($this->sql);
+        $this->stmt = $this->connection->prepare($this->sql);
 
         /** Preencho os parâmetros do SQL */
         $this->stmt->bindParam(':file_type_id', $this->fileTypeId);
@@ -138,7 +138,7 @@ class FilesTypes
         }
 
         /** Prepara a consulta SQL utilizando a conexão estabelecida. */
-        $this->stmt = $this->connection->connect()->prepare($this->sql);
+        $this->stmt = $this->connection->prepare($this->sql);
 
         /** Verifica se a consulta foi informada */
         if (!empty($this->search)) {
@@ -184,7 +184,7 @@ class FilesTypes
         $this->sql .= $this->limit;
 
         /** Prepara a consulta SQL utilizando a conexão estabelecida. */
-        $this->stmt = $this->connection->connect()->prepare($this->sql);
+        $this->stmt = $this->connection->prepare($this->sql);
 
         /** Verifica se a consulta foi informada */
         if (!empty($this->search)) {
@@ -211,7 +211,7 @@ class FilesTypes
         $this->sql = 'select * from files_types where file_type_id = :file_type_id';
 
         /** Prepara a consulta SQL utilizando a conexão estabelecida. */
-        $this->stmt = $this->connection->connect()->prepare($this->sql);
+        $this->stmt = $this->connection->prepare($this->sql);
 
         /** Preencho os parâmetros do SQL */
         $this->stmt->bindParam(':file_type_id', $this->fileTypeId);
@@ -239,7 +239,7 @@ class FilesTypes
                       where file_type_id = :file_type_id';
 
         /** Prepara a consulta SQL utilizando a conexão estabelecida. */
-        $this->stmt = $this->connection->connect()->prepare($this->sql);
+        $this->stmt = $this->connection->prepare($this->sql);
 
         /** Preencho os parâmetros do SQL */
         $this->stmt->bindParam(':file_type_id', $this->fileTypeId);

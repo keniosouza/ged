@@ -240,7 +240,7 @@ if (!is_null($newPassword) && !is_null($hash)) {
 
                                             <div class="text-center pt-2">
                                                 <button class="btn btn-light w-100" id="btnReset" onclick='validateForm("#UsersLoginForm", `{"request": {"path" : "action/users/users_reset"}, 
-                                                                                                                        "loader" : {"type" : 1, "target" : "btnReset"}, 
+                                                                                                                        "loader" : {"type" : 1, "target" : "UsersResetFormResponse"}, 
                                                                                                                         "form" : "UsersLoginForm", 
                                                                                                                         "response" : {"target" : "UsersResetFormResponse"}}`, "app")'>
                                                     Solicitar nova senha

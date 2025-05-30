@@ -4,7 +4,7 @@
     "version": "1",
     "release": "0.1",
     "name": "Docverse",
-    "url_application": "http://localhost/docverso/app/",
+    "url_application": "https://ged.servicodiario.com.br/app/",
     "delay": 0,
     "security": {
       "session_time": "30",
@@ -65,11 +65,11 @@
         "charset": "utf8"
       },
       "development": {
-        "host": "localhost",
+        "host": "api_mysql",
         "name": "ged",
         "port": "3306",
-        "user": "root",
-        "password": "root",
+        "user": "mysql",
+        "password": "sun147oi",
         "charset": "utf8"
       }
     },

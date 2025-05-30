@@ -134,7 +134,7 @@ try {
     $resultException = $exception->getMessage();
 
     /** Verifico se devo realizar o log */
-    if ($userId > 0) {
+    if (@$userId > 0) {
 
         /** Escrevo a mensagem de requisição */
         $_POST['exception'] = $resultException;

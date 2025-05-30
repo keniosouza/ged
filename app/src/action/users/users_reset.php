@@ -15,6 +15,7 @@ try {
 
     /** Controle de resultados */
     $result = null;
+    $url = null;
 
     /** Parametros de entrada */
     $email     = isset($_POST['email'])      ? (string) filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL)             : '';
@@ -32,7 +33,7 @@ try {
             /** Informo */
             throw new InvalidArgumentException($UsersValidate->getErrors(), 0);
         } else {
-
+            
             /** Busco o email informado */
             $UsersResult = $Users->GetByEmail($UsersValidate->getEmail());
 
@@ -103,7 +104,7 @@ try {
     $result = [
 
         'code' => 0,
-        'data' => $url //$exception->getMessage()
+        'data' => $exception->getMessage()// $url //$exception->getMessage()
     ];
 
     /** Envio **/

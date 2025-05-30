@@ -46,7 +46,7 @@ class Users
         $this->sql = "describe users";
 
         /** Preparo o SQL para execução */
-        $this->stmt = $this->connection->connect()->prepare($this->sql);
+        $this->stmt = $this->connection->prepare($this->sql);
 
         /** Executo o SQL */
         $this->stmt->execute();
@@ -88,7 +88,7 @@ class Users
 					        and u.password = :password;';
 
         /** Preparo o sql para receber os valores */
-        $this->stmt = $this->connection->connect()->prepare($this->sql);
+        $this->stmt = $this->connection->prepare($this->sql);
 
         /** Preencho os parâmetros do SQL */
         $this->stmt->bindParam(':email', $this->email);
@@ -149,7 +149,7 @@ class Users
                                               `date_update` = NOW()';
 
         /** Preparo o sql para receber os valores */
-        $this->stmt = $this->connection->connect()->prepare($this->sql);
+        $this->stmt = $this->connection->prepare($this->sql);
 
         /** Preencho os parâmetros do SQL */
         $this->stmt->bindParam(':userId', $userId);
@@ -210,7 +210,7 @@ class Users
         $this->sql .= $this->limit;
 
         /** Prepara a consulta SQL utilizando a conexão estabelecida. */
-        $this->stmt = $this->connection->connect()->prepare($this->sql);
+        $this->stmt = $this->connection->prepare($this->sql);
 
         /** Verifica se a consulta foi informada */
         if (!empty($this->search)) {
@@ -244,7 +244,7 @@ class Users
         }
 
         /** Prepara a consulta SQL utilizando a conexão estabelecida. */
-        $this->stmt = $this->connection->connect()->prepare($this->sql);
+        $this->stmt = $this->connection->prepare($this->sql);
 
         /** Verifica se a consulta foi informada */
         if (!empty($this->search)) {
@@ -268,7 +268,7 @@ class Users
         $this->sql = 'select * from users u where u.company_id = :companyId';
 
         /** Prepara a consulta SQL utilizando a conexão estabelecida. */
-        $this->stmt = $this->connection->connect()->prepare($this->sql);
+        $this->stmt = $this->connection->prepare($this->sql);
 
         /** Preencho os parâmetros do SQL */
         $this->stmt->bindParam(':companyId', $companyId);
@@ -288,7 +288,7 @@ class Users
         $this->sql = 'select * from users where user_id = :userId';
 
         /** Prepara a consulta SQL utilizando a conexão estabelecida. */
-        $this->stmt = $this->connection->connect()->prepare($this->sql);
+        $this->stmt = $this->connection->prepare($this->sql);
 
         /** Preencho os parâmetros do SQL */
         $this->stmt->bindParam(':userId', $userId);
@@ -304,21 +304,29 @@ class Users
     public function GetByEmail(string $email): object|bool
     {
 
-        /** Monta a consulta SQL para recuperar os chamados abertos da empresa. */
-        $this->sql = 'select * from users where email like :email order by user_id desc limit 1 ';
+        try{
+            /** Monta a consulta SQL para recuperar os chamados abertos da empresa. */
+            $this->sql = 'select * from users where email like :email order by user_id desc limit 1 ';
 
-        /** Prepara a consulta SQL utilizando a conexão estabelecida. */
-        $this->stmt = $this->connection->connect()->prepare($this->sql);
+            /** Prepara a consulta SQL utilizando a conexão estabelecida. */
+            $this->stmt = $this->connection->prepare($this->sql);
 
-        /** Preencho os parâmetros do SQL */
-        $this->stmt->bindParam(':email', $email);
+            /** Preencho os parâmetros do SQL */
+            $this->stmt->bindParam(':email', $email);
 
-        /** Executa a consulta SQL. */
-        $this->stmt->execute();
+            /** Executa a consulta SQL. */
+            $this->stmt->execute();
 
-        /** Retorna o resultado da consulta como um array de objetos. */
-        return $this->stmt->fetchObject();
-    }
+            /** Retorna o resultado da consulta como um array de objetos. */
+            return $this->stmt->fetchObject();
+
+        } catch (PDOException $e){
+
+            echo $e->getMessage();
+            return false;            
+        }
+
+    } 
 
 
     /** Localiza um usuário pelo e-mail e senha */
@@ -336,7 +344,7 @@ class Users
                       where user_id = :user_id';
 
         /** Prepara a consulta SQL utilizando a conexão estabelecida. */
-        $this->stmt = $this->connection->connect()->prepare($this->sql);
+        $this->stmt = $this->connection->prepare($this->sql);
 
         /** Preencho os parâmetros do SQL */
         $this->stmt->bindParam(':user_id', $this->userId);
@@ -361,7 +369,7 @@ class Users
                       where user_id = :user_id';
 
         /** Prepara a consulta SQL utilizando a conexão estabelecida. */
-        $this->stmt = $this->connection->connect()->prepare($this->sql);
+        $this->stmt = $this->connection->prepare($this->sql);
 
         /** Preencho os parâmetros do SQL */
         $this->stmt->bindParam(':user_id', $this->userId);

@@ -1,64 +1,44 @@
 <?php
-/**
- * Mysql Class
- *
- * Esta classe é responsável por gerenciar a conexão com o banco de dados MySQL.
- *
- * @package vendor\model
- * @created_by KEVEN
- * @created_date 01/06/2020
- * @created_time 13:20
- *
- */
 
-/** Defino o local onde a classe está localizada **/
 namespace src\model;
 
-/** Classe Host necessária para obter as configurações de conexão com o banco de dados **/
 use src\model\Host;
+use PDO;
+use PDOException;
 
-class Mysql
+/**
+ * Classe Mysql
+ * Responsável por instanciar uma conexão PDO com o banco de dados MySQL
+ * utilizando os dados da classe Host.
+ */
+class Mysql extends PDO
 {
-    /** @var \PDO $pdo Instância do objeto PDO para conexão com o banco de dados **/
-    public static $pdo;
-
     /**
-     * Método para conectar ao banco de dados MySQL.
-     *
-     * Este método estabelece a conexão com o banco de dados MySQL usando as configurações
-     * definidas na classe Host e retorna a instância do objeto PDO.
-     *
-     * @return \PDO Instância do objeto PDO para conexão com o banco de dados.
+     * Construtor da classe Mysql.
+     * Ao ser instanciada, já cria uma conexão válida com o banco.
      */
-    public static function connect()
+    public function __construct()
     {
-        /**
-         * Instância da classe Host para obter as configurações de conexão com o banco de dados.
-         */
+        // Instancia a classe Host para obter as configurações do banco
         $host = new Host();
 
-        /**
-         * Verifica se a conexão com o banco de dados ainda não foi estabelecida.
-         */
-        if (!isset(self::$pdo)) {
+        try {
+            // Chama o construtor da classe PDO (superclasse) com as credenciais
+            parent::__construct(
+                $host->getDsn(),
+                $host->getUser(),
+                $host->getPassword()
+            );
 
-            /**
-             * Inicia a conexão com o banco de dados usando as configurações obtidas da classe Host.
-             */
-            self::$pdo = new \PDO($host->getDsn(), $host->getUser(), $host->getPassword());
+            // Define o modo de erro para exceção (obrigatório para tratamento via try/catch)
+            $this->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-            /**
-             * Habilita a exibição de erros ao executar consultas SQL.
-             */
-            self::$pdo->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
+        } catch (PDOException $e) {
+            // Registra o erro no log (para segurança, não exibe diretamente)
+            error_log('Erro ao conectar com o banco de dados: ' . $e->getMessage());
 
+            // Relança a exceção para tratamento no código que chama
+            throw $e;
         }
-
-        /**
-         * Retorna a instância do objeto PDO para conexão com o banco de dados.
-         */
-        return self::$pdo;
-
     }
-
 }

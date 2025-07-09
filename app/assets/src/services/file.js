@@ -493,7 +493,7 @@ class File {
 
     }
 
-    async finally(data) {
+        async finalizeUpload(data) {
 
         /** Verifico se devo realizar o merge do arquivo */
         if (data.merge) {
@@ -617,7 +617,7 @@ class File {
                 form += '&hash=' + this._hash;
 
                 // Envia a parte do arquivo.
-                this.finally(await this.send(form));
+                this.finalizeUpload(await this.send(form));
 
             }
 

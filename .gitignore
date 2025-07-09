@@ -4,6 +4,8 @@
 # Ignora a pasta de arquivos temporários
 app/storage/temp/
 
+# Ignora a pasta de configuração
+config
 
 # Ignora arquivo de configuração
-app/config/
+#app/config/

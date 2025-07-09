@@ -268,9 +268,70 @@ class File {
 
     }
 
-    
+    /**
+     * Função que converte um arquivo para sua representação em base64.
+     * @param {File} inputFile - O arquivo a ser convertido.
+     * @returns {Promise<string>} - Uma promessa que resolve com a representação do arquivo em base64, ou rejeita com uma mensagem de erro.
+     */
+    getFileBase64(inputFile) {
 
-    
+        return new Promise((resolve, reject) => {
+
+            // Cria um novo objeto FileReader
+            var reader = new FileReader();
+
+            // Lê o arquivo como uma URL de dados (base64)
+            reader.readAsDataURL(inputFile);
+
+            // Define o callback para quando a leitura for concluída com sucesso
+            reader.onload = function () {
+
+                // Obtém a representação base64 do arquivo
+                var base64 = reader.result;
+
+                // Resolve a promessa com a representação base64 do arquivo
+                resolve(base64);
+
+            };
+
+            // Define o callback para quando ocorrer um erro durante a leitura
+            reader.onerror = function (error) {
+
+                // Rejeita a promessa com uma mensagem de erro
+                reject('Erro ao ler o arquivo: ' + error);
+
+            };
+
+        });
+
+    }
+
+    /**
+     * Função que realiza a separação de uma string em partes menores (chunks) e retorna um array contendo essas partes.
+     * @param {string} inputString - A string a ser dividida em chunks.
+     * @param {number} chunkSize - O tamanho desejado de cada chunk em termos de caracteres.
+     * @returns {Array} - Um array contendo os chunks da string.
+     */
+    getChunk(inputString, chunkSize) {
+
+        // Inicializa um array para armazenar os chunks resultantes.
+        const chunks = [];
+
+        // Loop através da string de entrada, com incremento pelo tamanho do chunk.
+        for (let i = 0; i < inputString.length; i += chunkSize) {
+
+            // Obtém uma parte (chunk) da string com base no tamanho especificado.
+            const chunk = inputString.substring(i, i + chunkSize);
+
+            // Adiciona o chunk ao array de chunks.
+            chunks.push(chunk);
+
+        }
+
+        // Retorna o array contendo os chunks da string.
+        return chunks;
+
+    }
 
     /**
      * Função que recebe um nome de arquivo e retorna a extensão do arquivo.
@@ -365,14 +426,20 @@ class File {
             /** Obtém o tamanho do arquivo */
             temp.size = _files.files[i].size;
 
+            /** Separo o base64 de acordo com a visualização */
+            var base64 = await this.getFileBase64(_files.files[i]);
+
+            /** Guardo o base64 original */
+            temp.chunks = base64;
+
             /** Realiza a montagem da visualização dos arquivos na tela */
             this.view(temp);
 
-            /** Armazena o arquivo original para processamento em chunks */
-            temp.file = _files.files[i];
+            /** Removo apenas o cabeçalho do base64 */
+            base64 = base64.split(',')[1];
 
-            /** Armazena as informações do arquivo na classe */
-            this._files.push(temp);
+            /** Obtém e armazena as partes do arquivo em chunks */
+            temp.chunks = this.getChunk(base64, (1024 * 1024));
 
             /** Armazena as informações do arquivo na classe */
             this._files.push(temp);
@@ -519,29 +586,17 @@ class File {
             /** Cria um HASH localizador concatenando tamanho do arquivo, hora, minutos, segundos e milissegundos */
             this._hash = this._files[i].size + dateTime.getHours() + dateTime.getMinutes() + dateTime.getSeconds() + dateTime.getMilliseconds();
 
-            const chunkSize = 1024 * 1024; // 1MB
-            const totalChunks = Math.ceil(this._files[i].file.size / chunkSize);
-
-            for (let j = 0; j < totalChunks; j++) {
-                const offset = j * chunkSize;
-                const chunk = this._files[i].file.slice(offset, offset + chunkSize);
+            /** Para cada chunk gerado, realiza o envio do mesmo */
+            for (let j = 0; j < this._files[i].chunks.length; j++) {
 
                 /** Calculo o progresso */
-                this._size = (j / totalChunks) * 100;
+                this._size = (j / this._files[i].chunks.length) * 100;
 
                 /** Formato os numeros */
                 this._size = this._size.toFixed(2);
 
                 /** Atualizo a barra de progresso */
                 this.progress(this._indice);
-
-                // Converte o chunk para base64
-                const base64Chunk = await new Promise((resolve, reject) => {
-                    const reader = new FileReader();
-                    reader.onload = () => resolve(reader.result.split(',')[1]);
-                    reader.onerror = error => reject(error);
-                    reader.readAsDataURL(chunk);
-                });
 
                 // Adiciona o número da parte atual do arquivo à string de dados.
                 var form = 'path=action/files/files_save_chunk.php';
@@ -553,16 +608,17 @@ class File {
                 form += '&chunk_part=' + (j + 1);
 
                 // Adiciona o tamanho total do arquivo à string de dados.
-                form += '&chunk_size=' + totalChunks;
+                form += '&chunk_size=' + this._files[i].chunks.length;
 
                 // Adiciona o conteúdo da parte atual do arquivo à string de dados.
-                form += '&base64=' + base64Chunk;
+                form += '&base64=' + this._files[i].chunks[j];
 
                 // Adiciona o conteúdo da parte atual do arquivo à string de dados.
                 form += '&hash=' + this._hash;
 
                 // Envia a parte do arquivo.
                 this.finalizeUpload(await this.send(form));
+
             }
 
         }

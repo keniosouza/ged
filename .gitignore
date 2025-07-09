@@ -2,7 +2,7 @@
 #app/storage/files/
 
 # Ignora a pasta de arquivos temporários
-app/storage/temp/
+app/storage
 
 # Ignora a pasta de configuração
 config

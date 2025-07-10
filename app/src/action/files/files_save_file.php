@@ -9,6 +9,8 @@ use src\controller\files\FilesProcedures;
 
 try {
 
+    error_log("files_save_file.php - POST Data: " . print_r($_POST, true));
+
     /** Instânciamento de classes  */
     $Main = new Main();
     $Files = new Files();
@@ -21,7 +23,12 @@ try {
     $name    = isset($_POST['name'])     ? (string)filter_input(INPUT_POST, 'name', FILTER_SANITIZE_SPECIAL_CHARS)  : '';
 
     /** Parâmetros de entrada dos ARQUIVOS */
-    $hash = $_POST['hash'];
+    $hash = isset($_POST['hash']) ? $_POST['hash'] : '';
+
+   $tempPath = 'storage/temp/' . $hash;
+   error_log("files_save_file.php - Temp Path: " . $tempPath);
+   error_log("files_save_file.php - Temp Path Exists: " . (is_dir($tempPath) ? 'Yes' : 'No'));
+   error_log("files_save_file.php - Temp Path Contents: " . (is_dir($tempPath) ? print_r(scandir($tempPath), true) : 'Directory does not exist'));     
 
     /** Define o local do arquivo e realiza validações */
     $FilesValidate->setFileId($fileId);
@@ -50,6 +57,7 @@ try {
             $FilesValidate->getName(),
             $FilesValidate->getPath()
         );
+        error_log("files_save_file.php - Função merge finalizada.");
 
         /** Salvo o arquivo desejado */
         if ($Files->Save(

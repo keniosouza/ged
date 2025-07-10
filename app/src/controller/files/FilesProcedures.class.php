@@ -35,7 +35,13 @@ class FilesProcedures
          * propriedades da classe. */
         $this->path = $path;
         $this->name = $name;
-        $this->base64 = str_replace(' ', '+', $base64);
+
+        // Decodifica o base64 antes de escrever no arquivo
+        $decoded_base64 = base64_decode($base64, true);
+        if ($decoded_base64 === false) {
+            error_log("FilesProcedures.generate - ERRO: base64_decode falhou para o chunk " . $name);
+            return false; // Indica falha
+        }
 
         /** Verifica se a pasta especificada existe. */
         if (!is_dir($this->path)) {
@@ -45,7 +51,7 @@ class FilesProcedures
         }
 
         /** Gera um arquivo temporário com a permissão necessária. */
-        file_put_contents($this->path . '/' . $this->name, $this->base64);
+        file_put_contents($this->path . '/' . $this->name, $decoded_base64);
 
         /** Verifica se o arquivo foi 
          * gerado na pasta especificada */
@@ -101,7 +107,6 @@ class FilesProcedures
      */
     public function merge(string $path, string $name, string $destiny): object
     {
-
         /** Define os parâmetros de entrada como propriedades da classe. */
         $result = null;
         $this->path = $path;
@@ -127,67 +132,48 @@ class FilesProcedures
         /** Reorganizo os indices da array */
         $this->dir = array_values($this->dir);
 
+        // Abre o arquivo de destino uma única vez em modo de anexação
+        $fp = fopen($this->destiny . $this->name, 'a');
+        if (!$fp) {
+            error_log("FilesProcedures.merge - ERRO: Não foi possível abrir o arquivo de destino para escrita: " . $this->destiny . $this->name);
+            return (object)['code' => 0, 'data' => 'Não foi possível abrir o arquivo de destino.'];
+        }
+
         /** Percorre todos os arquivos no diretório. */
         foreach ($this->dir as $key => $content) {
-
-            // Abre o arquivo de destino em modo de escrita e leitura.
-            $fp = fopen($this->destiny . $this->name, 'a+');
-
             // Escreve no arquivo aberto o conteúdo do arquivo atual.
             fwrite($fp, file_get_contents($this->path . '/' . $content));
+        }
 
-            // Fecha o arquivo.
-            fclose($fp);
+        // Fecha o arquivo de destino após todas as escritas
+        fclose($fp);
 
-            /** Verifico se devo decodificar o arquivo enviado */
-            if (($key + 1) === count($this->dir)) {
+        /** Verifico se o arquivo foi gerado e se 
+         * devo remover a pasta temporária*/
+        if (is_file($this->destiny . $this->name)) {
 
-                /** Obtenho os dados codificados do arquivo */
-                $base64 = file_get_contents($this->destiny . $this->name);
+            /** Instânciamento de classe */
+            $Main = new Main();
 
-                /** Realizo a quebra de linha para ficar dentro do padrão RFC 1421 */
-                $base64 = chunk_split($base64, 64, "\r\n");
+            /** Remoção da pasta temporária */
+            $Main->deleteFolder($this->path);
 
-                /** Decodificação do base 64 */
-                $base64 = base64_decode($base64, true);
+            // Result
+            $result = [
 
-                // Abre o arquivo de destino em modo de escrita e leitura.
-                $fp = fopen($this->destiny . $this->name, 'w+');
+                'code' => 200,
+                'data' => 'Arquivo gerado com sucesso',
 
-                // Escreve no arquivo aberto o conteúdo do arquivo atual.
-                fwrite($fp, $base64);
+            ];
+        } else {
 
-                // Fecha o arquivo.
-                fclose($fp);
+            // Result
+            $result = [
 
-                /** Verifico se o arquivo foi gerado e se 
-                 * devo remover a pasta temporária*/
-                if (is_file($this->destiny . $this->name)) {
+                'code' => 0,
+                'data' => 'Não foi possível gerar o arquivo',
 
-                    /** Instânciamento de classe */
-                    $Main = new Main();
-
-                    /** Remoção da pasta temporária */
-                    $Main->deleteFolder($this->path);
-
-                    // Result
-                    $result = [
-
-                        'code' => 200,
-                        'data' => 'Arquivo gerado com sucesso',
-
-                    ];
-                } else {
-
-                    // Result
-                    $result = [
-
-                        'code' => 0,
-                        'data' => 'Não foi possível gerar o arquivo',
-
-                    ];
-                }
-            }
+            ];
         }
 
         /** Retorno da informação em formato de objeto */

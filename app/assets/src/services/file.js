@@ -374,9 +374,6 @@ class File {
             /** Armazena as informações do arquivo na classe */
             this._files.push(temp);
 
-            /** Armazena as informações do arquivo na classe */
-            this._files.push(temp);
-
         }
 
         /** Reinicia o campo file */
@@ -440,7 +437,9 @@ class File {
                 this.progress(this._indice);
 
                 // Obtém os valores dos campos do formulário em formato de string.
-                var form = this.serializeForm('FilesFormHeader');
+                // Adiciona o path para files_save_file.php
+                var form = 'path=action/files/files_save_file.php';
+                form += '&' + this.serializeForm('FilesFormHeader');
 
                 // Adiciona os dados específicos da imagem à string de dados.
                 form += '&name=' + this._files[this._indice].name;
@@ -538,7 +537,11 @@ class File {
                 // Converte o chunk para base64
                 const base64Chunk = await new Promise((resolve, reject) => {
                     const reader = new FileReader();
-                    reader.onload = () => resolve(reader.result.split(',')[1]);
+                    reader.onload = () => {
+                        const result = reader.result.split(',')[1];
+                        
+                        resolve(result);
+                    };
                     reader.onerror = error => reject(error);
                     reader.readAsDataURL(chunk);
                 });
@@ -556,7 +559,7 @@ class File {
                 form += '&chunk_size=' + totalChunks;
 
                 // Adiciona o conteúdo da parte atual do arquivo à string de dados.
-                form += '&base64=' + base64Chunk;
+                form += '&base64=' + encodeURIComponent(base64Chunk);
 
                 // Adiciona o conteúdo da parte atual do arquivo à string de dados.
                 form += '&hash=' + this._hash;

@@ -21,6 +21,8 @@ try {
     $chunkSize = isset($_POST['chunk_size']) ? (string)filter_input(INPUT_POST, 'chunk_size', FILTER_SANITIZE_SPECIAL_CHARS) : '';
     $extension = isset($_POST['extension'])  ? (string)filter_input(INPUT_POST, 'extension', FILTER_SANITIZE_SPECIAL_CHARS)  : '';
 
+    error_log("files_save_chunk.php - Recebido: chunkPart=" . $chunkPart . ", chunkSize=" . $chunkSize . ", hash=" . $hash);
+
     /** Define o local do arquivo e realiza validações */
     $FilesValidate->setPath('storage/temp/' . $hash);
     $FilesValidate->setBase64($base64);
@@ -39,6 +41,7 @@ try {
             $chunkPart . '_part',
             $FilesValidate->getBase64()
         )) {
+            error_log("files_save_chunk.php - generate() retornou TRUE para chunk " . $chunkPart);
 
             // Result
             $result = [
@@ -51,6 +54,7 @@ try {
 
             ];
         } else {
+            error_log("files_save_chunk.php - generate() retornou FALSE para chunk " . $chunkPart);
 
             /** Caso ocorra algum erro, lança uma exceção com a mensagem de erro. */
             throw new InvalidArgumentException('Não foi possível enviar o arquivo', 0);
@@ -63,6 +67,7 @@ try {
     /** Encerra o procedimento */
     exit;
 } catch (Exception $exception) {
+    error_log("files_save_chunk.php - EXCEÇÃO: " . $exception->getMessage());
 
     /** Preparo o formulario para retorno **/
     $result = [

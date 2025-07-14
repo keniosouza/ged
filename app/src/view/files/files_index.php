@@ -322,9 +322,15 @@ try {
 
                                                         <li>
 
-                                                            <a class="dropdown-item" onclick='new Request({"request": {"path" : "action/companies/companies_delete"}, 
-                                                                                                                               "params" : {"file_id" : "<?php echo $result->file_id ?>"}, 
-                                                                                                                               "loader" : {"type" : 3}})'>
+                                                            <script>
+                                                                var procedure = "new Request({'request' : {'path' : 'action/files/files_delete'}, 'params' : {'file_id' : '<?php echo $result->file_id ?>'}, 'loader' : {'type' : 3}})";
+                                                            </script>                                                        
+
+                                                            <a class="dropdown-item" onclick="new Modal({ title: 'Atenção', 
+                                                                                                          data: '<h3 class=\'text-center\'>Deseja realmente excluir este arquivo?</h3>', 
+                                                                                                          size: 'small', 
+                                                                                                          type: 'bi bi-trash', 
+                                                                                                          procedure: procedure });">
 
                                                                 <i class="bi bi-trash me-1"></i>Remover
 

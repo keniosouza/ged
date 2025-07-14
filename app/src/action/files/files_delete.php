@@ -16,6 +16,8 @@ $result = null;
 $FilesValidate->setFileId((int) filter_input(INPUT_POST, 'file_id', FILTER_SANITIZE_SPECIAL_CHARS));
 $FilesValidate->setUserId((int) $_SESSION['MY_SAAS_USER']['user_id']);
 
+print_r($_SESSION['MY_SAAS_USER']);
+
 /** Verifico a existência de erros */
 if (!empty($FilesValidate->getErrors())) {
 

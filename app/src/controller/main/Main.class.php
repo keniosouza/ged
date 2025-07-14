@@ -55,6 +55,9 @@ class Main
     private ?string $fromName = null;
     private ?string $messageNewPassword = null;
     private ?string $environment = null;
+    private ?string $protocol = null;
+    private ?string $script = null;
+    private ?string $url = null;
 
     function __construct(?string $pathConfig = null)
     {
@@ -70,7 +73,9 @@ class Main
         $this->firstKey        = $this->config->{'security'}->{'first_key'};
         $this->secondKey       = $this->config->{'security'}->{'second_key'};
         $this->hash            = $this->config->{'security'}->{'hash'};
-        $this->urlApplication  = $this->config->{'url_application'};
+
+        //Verifica se é um acesso local ou externo
+        $this->urlApplication  = $this->config->{'ip_servidor'} == $_SERVER['HTTP_HOST'] ? $_SERVER['HTTP_HOST'] : $this->config->{'url_application'};
 
         /** Parametro do tempo de sessão do usuário */
         $this->sessionTime = $this->config->{'security'}->{'session_time'};
@@ -875,7 +880,6 @@ class Main
     {
         return ['pdf', 'doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx', 'txt', 'zip', 'rar', '7z', 'tar', 'gz'];
     }
-
 
     /** Destrutor da classe */
     public function __destruct() {}

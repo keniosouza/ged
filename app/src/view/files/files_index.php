@@ -334,11 +334,7 @@ try {
 
                                                                 <i class="bi bi-trash me-1"></i>Remover
 
-                                                            </a>
-
-                                                            <script>
-                                                                var procedure = null;
-                                                            </script>                                                             
+                                                            </a>                                                        
 
                                                         </li>
 

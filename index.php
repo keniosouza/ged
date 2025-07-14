@@ -204,7 +204,7 @@ if (!is_null($newPassword) && !is_null($hash)) {
                                             <div>
                                                 <div class="custom-control custom-checkbox">
                                                     <input type="checkbox" class="custom-control-input" id="remember_access" name="remember_access" value="S" <?php echo isset($_COOKIE['RememberAccess']) ? 'checked' : ''; ?>>
-                                                    <label class="custom-control-label c-pointer" for="rememberMe">Lembrar
+                                                    <label class="custom-control-label c-pointer" for="remember_access">Lembrar
                                                         dados de acesso
                                                     </label>
                                                 </div>

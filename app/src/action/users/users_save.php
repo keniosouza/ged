@@ -44,6 +44,20 @@ try {
         $UsersValidate->setUserId($userId);
 
 
+        /** Verifico se o usuário já existe, apenas para novos cadastros */
+        if ($UsersValidate->getUserId() == 0) {
+
+            /** Busco o email informado */
+            $userExists = $Users->GetByEmail($UsersValidate->getEmail());
+
+            /** Verifico se o email foi localizado */
+            if (!empty($userExists->email)) {
+
+                /** Informo */
+                throw new InvalidArgumentException('<div class="alert alert-warning mt-2" role="alert">Já existe um usuário cadastrado com o e-mail informado.</div>', 0);
+            }
+        }
+
         /** Verifico a existência de erros */
         if (!empty($UsersValidate->getErrors())) {
 

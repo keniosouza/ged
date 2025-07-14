@@ -14,6 +14,7 @@ $result = null;
 
 /** Validando os campos de entrada */
 $FilesValidate->setFileId((int) filter_input(INPUT_POST, 'file_id', FILTER_SANITIZE_SPECIAL_CHARS));
+$FilesValidate->setUserId((int) $_SESSION['MY_SAAS_USER']['user_id']);
 
 /** Verifico a existência de erros */
 if (!empty($FilesValidate->getErrors())) {
@@ -23,7 +24,7 @@ if (!empty($FilesValidate->getErrors())) {
 } else {
 
     /** Efetua um novo cadastro ou salva os novos dados */
-    if ($Files->Delete($FilesValidate->getFileId())) {
+    if ($Files->Delete($FilesValidate->getFileId(), $FilesValidate->getUserId())) {
 
         // Result
         $result = [

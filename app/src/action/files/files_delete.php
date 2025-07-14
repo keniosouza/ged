@@ -12,11 +12,9 @@ $FilesValidate = new FilesValidate();
 /** Controle de resultados */
 $result = null;
 
-echo $_SESSION['MY_SAAS_USER']->user_id;
-
 /** Validando os campos de entrada */
 $FilesValidate->setFileId((int) filter_input(INPUT_POST, 'file_id', FILTER_SANITIZE_SPECIAL_CHARS));
-$FilesValidate->setUserId((int) $_SESSION['MY_SAAS_USER']['user_id']);
+$FilesValidate->setUserId((int) $_SESSION['MY_SAAS_USER']->user_id);
 
 /** Verifico a existência de erros */
 if (!empty($FilesValidate->getErrors())) {

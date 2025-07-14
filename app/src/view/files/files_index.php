@@ -336,6 +336,10 @@ try {
 
                                                             </a>
 
+                                                            <script>
+                                                                var procedure = null;
+                                                            </script>                                                             
+
                                                         </li>
 
                                                     </ul>

@@ -75,7 +75,7 @@ class Main
         $this->hash            = $this->config->{'security'}->{'hash'};
 
         //Verifica se é um acesso local ou externo
-        $this->urlApplication  = $this->config->{'ip_servidor'} == $_SERVER['HTTP_HOST'] ? $_SERVER['HTTP_HOST'] : $this->config->{'url_application'};
+        $this->urlApplication  = $this->config->{'ip_servidor'} == 'http://'.$_SERVER['HTTP_HOST'] ? $_SERVER['HTTP_HOST'] : $this->config->{'url_application'};
 
         /** Parametro do tempo de sessão do usuário */
         $this->sessionTime = $this->config->{'security'}->{'session_time'};

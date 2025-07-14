@@ -25,6 +25,7 @@ try {
     $password       = isset($_POST['password'])        ? (string) filter_input(INPUT_POST, 'password', FILTER_SANITIZE_EMAIL)                : '';
     $rememberAccess = isset($_POST['remember_access']) ? (string) filter_input(INPUT_POST, 'remember_access', FILTER_SANITIZE_SPECIAL_CHARS) : '';
     $csrfToken      = isset($_POST['csrf_token'])      ? (string)filter_input(INPUT_POST, 'csrf_token', FILTER_SANITIZE_SPECIAL_CHARS)       : null;
+    $urlNewPwd      = null;
 
     /** Verifica se o Token CSRF é válido */
     if ($csrfToken === $_SESSION['csrf_token']) {
@@ -46,8 +47,34 @@ try {
             /** Verifico se o email foi localizado */
             if (!empty($UsersGetByEmailResult->email)) {
 
+
+                /** Verifica se é o primeiro acesso caso a senha temporária tenha sido informada */
+                if( (!empty($UsersGetByEmailResult->password_temp)) && (empty($UsersGetByEmailResult->password))){
+
+                    /** Gera o hash */
+                    $urlNewPwd = $Main->getUrlApp().'new-password=true&hash='.$Main->encryptData($UsersGetByEmailResult->email.'*'.$UsersGetByEmailResult->user_id);
+
+                    // Result
+                    $result = [
+
+                        'code' => 200,
+                        'toast' => [
+                            [
+                                'background' => 'primary',
+                                'data' => 'Usuário localizado!'
+                            ]
+                        ],
+                        'reload' => [
+                            [
+                                'url' => $urlNewPwd
+                            ]
+                        ],
+
+                    ];                    
+                }
+
                 /** Verifico se a senha do usuário não é nula e se as senhas são iguais */
-                if (!is_null($UsersGetByEmailResult->password) && password_verify($UsersValidate->getPassword(), $UsersGetByEmailResult->password)) {
+                elseif (!is_null($UsersGetByEmailResult->password) && password_verify($UsersValidate->getPassword(), $UsersGetByEmailResult->password)) {
 
                     // Controle de preferencias
                     $preferences = [];

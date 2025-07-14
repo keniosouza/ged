@@ -33,7 +33,7 @@ if (!empty($FilesValidate->getErrors())) {
             'data' => 'Perfil Atualizado',
             'toast' => [
                 [
-                    'background' => 'alert-primary',
+                    'background' => 'alert-success',
                     'data' => '<i class="bi bi-trash me-1"></i>Registro removido'
                 ]
             ],

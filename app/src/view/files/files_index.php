@@ -327,7 +327,7 @@ try {
                                                             </script>                                                        
 
                                                             <a class="dropdown-item" onclick="new Modal({ title: 'Atenção', 
-                                                                                                          data: '<h3 class=\'text-center\'>Deseja realmente excluir este arquivo?</h3>', 
+                                                                                                          data: '<h3 class=\'text-center\'>Deseja realmente excluir este arquivo <?php echo $result->name ?>?</h3>', 
                                                                                                           size: 'small', 
                                                                                                           type: 'bi bi-trash', 
                                                                                                           procedure: procedure });">

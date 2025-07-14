@@ -37,11 +37,7 @@ if (!empty($FilesValidate->getErrors())) {
                     'data' => 'Registro removido'
                 ]
             ],
-            'redirect' => [
-                [
-                    'request' => 'view/files/files_index',
-                ]
-            ]
+            'remove' => $FilesValidate->getFileId()
 
         ];
     } else {

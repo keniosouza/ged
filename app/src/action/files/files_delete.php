@@ -30,10 +30,10 @@ if (!empty($FilesValidate->getErrors())) {
         $result = [
 
             'code' => 200,
-            'data' => 'Perfil Atualizado',
+            'data' => 'Arquivo removido',
             'toast' => [
                 [
-                    'background' => 'alert-success',
+                    'background' => 'bg-warning ',
                     'data' => '<i class="bi bi-trash me-1"></i>Registro removido'
                 ]
             ],

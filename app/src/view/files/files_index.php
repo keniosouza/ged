@@ -213,7 +213,7 @@ try {
                                             </td>
 
 
-                                            <td>
+                                            <td class="text-wrap">
                                                 <?php echo $result->name ?>
 
                                             </td>

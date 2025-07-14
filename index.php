@@ -26,7 +26,7 @@ $formNewPwd  = false;
 if (!is_null($newPassword) && !is_null($hash)) {
 
     /** Descriptografa o hash */
-    $hash = $Main->decryptData(str_replace(' ', '+', $_GET['hash']));
+    $hash = $Main->decryptData(base64_decode($_GET['hash']));
 
     /** Separa a informação do hash */
     $info = explode('*', $hash);

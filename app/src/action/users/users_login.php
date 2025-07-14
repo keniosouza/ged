@@ -46,8 +46,8 @@ try {
             /** Verifico se o email foi localizado */
             if (!empty($UsersGetByEmailResult->email)) {
 
-                /** Verifico se as senhas são iguais */
-                if (password_verify($UsersValidate->getPassword(), $UsersGetByEmailResult->password)) {
+                /** Verifico se a senha do usuário não é nula e se as senhas são iguais */
+                if (!is_null($UsersGetByEmailResult->password) && password_verify($UsersValidate->getPassword(), $UsersGetByEmailResult->password)) {
 
                     // Controle de preferencias
                     $preferences = [];

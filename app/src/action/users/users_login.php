@@ -52,8 +52,8 @@ try {
                 if( (!empty($UsersGetByEmailResult->password_temp)) && (empty($UsersGetByEmailResult->password))){
 
                     /** Gera o hash */
-                    $urlNewPwd = 'new-password/'.$Main->encryptData($UsersGetByEmailResult->email.'*'.$UsersGetByEmailResult->user_id);
-
+                    $urlNewPwd = $Main->getUrlApp().'new-password/'.base64_encode($Main->encryptData($UsersGetByEmailResult->email.'*'.$UsersGetByEmailResult->user_id));
+                    
 
                     // Result
                     $result = [

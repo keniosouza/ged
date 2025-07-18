@@ -252,7 +252,7 @@ class FilesValidate
 
             $words = ['/', '-', '_', '+', ' '];
 
-            $this->name = str_replace($words, '_', $this->name);
+            $this->name = str_replace($words, '_', $this->name).'-'.date('YmdHis');
         }
     }
 

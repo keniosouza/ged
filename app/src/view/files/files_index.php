@@ -499,6 +499,14 @@ try {
 
             });
 
+            document.getElementById('batch_id').addEventListener('change', function () {
+                const campoSearch = document.querySelector('input[name="search"]');
+                if (campoSearch) {
+                    const valorSelecionado = this.value;
+                    campoSearch.setAttribute('data-required', valorSelecionado ? 'N' : 'S');
+                }
+            });
+
         });
     </script>
 

@@ -70,8 +70,6 @@ try {
             /** Verifico se a sessão da pessoa está ativa para concluir a requisição */
             if ($RouterAuth->checkAccess($RouterValidate->getPath())) {
 
-                //echo $Main->GetConfig()->{'log'}->{'log'};;
-
                 // VErifica se é para gravar o log
                 if($Main->GetConfig()->{'log'}->active === true){
 

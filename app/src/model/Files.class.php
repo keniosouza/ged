@@ -289,6 +289,12 @@ class Files
             $this->sql .= ' and name like(:name)';
         }
 
+        /** Verifica se o batch foi informado */
+        if($this->batchId > 0) {
+
+            $this->sql .= ' and batch_id =  :batch_id';
+        }        
+
         /** Informa a limitação de registros */
         $this->sql .= $this->limit;
 

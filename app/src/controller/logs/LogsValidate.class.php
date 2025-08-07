@@ -151,7 +151,8 @@ class LogsValidate
     {
 
         /** Tratamento da informação */
-        $this->data = isset($data) ? $this->Main->antiInjection($data, 'S') : null;
+        $this->data = isset($data) ? $this->Main->antiInjection($data, 'S') : null;              
+
 
     }
 

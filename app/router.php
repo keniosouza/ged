@@ -70,25 +70,39 @@ try {
             /** Verifico se a sessão da pessoa está ativa para concluir a requisição */
             if ($RouterAuth->checkAccess($RouterValidate->getPath())) {
 
-                /** Verifico se o usuário está logado para realizar o log */
-                if ($userId > 0) {
+                //echo $Main->GetConfig()->{'log'}->{'log'};;
 
-                    /** Defino os novos dados de log */
-                    $LogsValidate->setLogTypeId(1);
-                    $LogsValidate->setData(json_encode($_POST, JSON_PRETTY_PRINT));
+                // VErifica se é para gravar o log
+                if($Main->GetConfig()->{'log'}->active === true){
 
-                    /** Log de requisições */
-                    $Logs->Save(
-                        $LogsValidate->getLogId(),
-                        $LogsValidate->getLogTypeId(),
-                        $LogsValidate->getCompanyId(),
-                        $LogsValidate->getParentId(),
-                        $LogsValidate->getRegisterId(),
-                        $LogsValidate->getUserId(),
-                        $LogsValidate->getRequest(),
-                        $LogsValidate->getData(),
-                        $LogsValidate->getDateRegister()
-                    );
+
+                    /** Caso o campo base64 esteja presente na requisição, não grava o log */
+                    if(!isset($_POST['base64'])) {
+
+                
+                        /** Verifico se o usuário está logado para realizar o log */
+                        if ($userId > 0) {
+
+                            /** Defino os novos dados de log */
+                            $LogsValidate->setLogTypeId(1);
+                            $LogsValidate->setData(json_encode($_POST, JSON_PRETTY_PRINT));
+
+                            /** Log de requisições */
+                            $Logs->Save(
+                                $LogsValidate->getLogId(),
+                                $LogsValidate->getLogTypeId(),
+                                $LogsValidate->getCompanyId(),
+                                $LogsValidate->getParentId(),
+                                $LogsValidate->getRegisterId(),
+                                $LogsValidate->getUserId(),
+                                $LogsValidate->getRequest(),
+                                $LogsValidate->getData(),
+                                $LogsValidate->getDateRegister()
+                            );
+                        }
+
+                    }
+
                 }
 
                 /** Inicio a coleta de dados */

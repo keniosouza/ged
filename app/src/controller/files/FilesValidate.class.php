@@ -58,6 +58,7 @@ class FilesValidate
         /** Instânciamento da classe de validação */
         $this->Main = new Main();
     }
+  
 
     /** Trata o campo start */
     public function setStart(?int $start): void

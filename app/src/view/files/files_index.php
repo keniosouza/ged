@@ -3,21 +3,25 @@
 /** Importação de classes */
 
 use src\model\Files;
+use src\model\Batchs;
 use src\controller\files\FilesValidate;
 
 try {
 
     /** Instânciamento de classes */
     $Files = new Files();
+    $Batchs = new Batchs();
     $FilesValidate = new FilesValidate();
 
     /** Parametros de entrada */
-    $start  = isset($_POST['start'])  ? (int)filter_input(INPUT_POST, 'start',  FILTER_SANITIZE_NUMBER_INT)       : 0;
-    $page   = isset($_POST['page'])   ? (int)filter_input(INPUT_POST, 'page',  FILTER_SANITIZE_NUMBER_INT)        : 0;
-    $max    = $Main->getRows() > 0    ? (int)$Main->getRows()                                                     : 20; //Se não houver definição de quantidade de registros, define 20 com padrão       
-    $search = isset($_POST['search']) ? (string)filter_input(INPUT_POST, 'search', FILTER_SANITIZE_SPECIAL_CHARS) : null;
+    $batchId = isset($_POST['batch_id'])  ? (int)filter_input(INPUT_POST, 'batch_id',  FILTER_SANITIZE_NUMBER_INT)    : 0;
+    $start   = isset($_POST['start'])     ? (int)filter_input(INPUT_POST, 'start',  FILTER_SANITIZE_NUMBER_INT)       : 0;
+    $page    = isset($_POST['page'])      ? (int)filter_input(INPUT_POST, 'page',  FILTER_SANITIZE_NUMBER_INT)        : 0;
+    $max     = $Main->getRows() > 0       ? (int)$Main->getRows()                                                     : 20; //Se não houver definição de quantidade de registros, define 20 com padrão       
+    $search  = isset($_POST['search'])    ? (string)filter_input(INPUT_POST, 'search', FILTER_SANITIZE_SPECIAL_CHARS) : null;
 
     /** Validando os campos de entrada */
+    $FilesValidate->setBatchId($batchId);
     $FilesValidate->setSearch($search);
     $FilesValidate->setStart($start);
     $FilesValidate->setPage($page);
@@ -25,14 +29,16 @@ try {
 
     /** Consulta a quantidade de registros */
     $rows = $Files->Count(
-        $FilesValidate->getSearch()
+        $FilesValidate->getSearch(),
+        $FilesValidate->getBatchId()
     );
 
     /** Retorna os registros com paginação */
     $FilesResult = $Files->All(
         $FilesValidate->getStart(),
         $FilesValidate->getMax(),
-        $FilesValidate->getSearch()
+        $FilesValidate->getSearch(),
+        $FilesValidate->getBatchId()
     )
 
 ?>
@@ -51,6 +57,8 @@ try {
 
         <div class="page-header-right ms-auto">
             <div class="page-header-right-items">
+                
+            
                 <div class="d-flex d-md-none">
                     <a href="javascript:void(0)" class="page-header-right-close-toggle">
                         <i class="feather-arrow-left me-2"></i>
@@ -61,31 +69,76 @@ try {
 
                 <div class="d-flex align-items-center gap-2 page-header-right-items-wrapper">
 
-                    <form id="frmSearch" class="float-end w-100" action="javascript:void">
+                    <form id="frmSearch" class="float-end w-100" action="javascript:void">  
 
-                        <div class="input-group">
+                        <div class="row g-2">
+                        
+                            <div class="col-md-6">
 
-                            <input type="text"
-                                class="form-control"
-                                data-bs-toggle="tooltip"
-                                data-bs-title="Informe sua pesquisa aqui..."
-                                placeholder="Informe sua pesquisa aqui..."
-                                id="search"
-                                name="search"
-                                wfd-id="id6"
-                                value="<?php echo $FilesValidate->getSearch(); ?>"
-                                data-required="S">
+                                <div class="input-group">                   
 
-                            <button class="btn btn-outline-secondary" id="btnSearch" type="button" onclick='validateForm("#frmSearch", `{"request": {"path" : "view/files/files_index"},
-                                                                                                 "loader" : {"type" : 1, "target" : "btnSearch"}, 
-                                                                                                 "response" : {"target" : "app-main"},
-                                                                                                 "form" : "frmSearch"}`)'>
+                                    <select class="form-select" id="batch_id" name="batch_id">
 
 
-                                <i class="bi bi-search"></i>
+                                        <option value="">
 
-                            </button>
+                                            Selecione um lote
 
+                                        </option>                     
+
+                                        <?php
+                                        /** Lista os lotes */
+                                        $BatchsResult = $Batchs->All(null, null, null);
+
+                                        foreach ($BatchsResult as $key => $result) { ?>
+
+                                            <option value="<?php echo $result->batch_id ?>" <?php echo $result->batch_id === $FilesValidate->getBatchId() ? 'selected' : null ?>>
+
+                                                <?php echo $result->description ?>
+
+                                            </option>                        
+
+                                        <?php
+                                        }
+
+                                        ?>
+
+
+                                    </select>
+
+                                </div>
+
+                            </div>
+
+                            <div class="col-md-6">     
+
+                                <div class="input-group">
+
+                                    <input type="text"
+                                        class="form-control"
+                                        data-bs-toggle="tooltip"
+                                        data-bs-title="Informe sua pesquisa aqui..."
+                                        placeholder="Informe sua pesquisa aqui..."
+                                        id="search"
+                                        name="search"
+                                        wfd-id="id6"
+                                        value="<?php echo $FilesValidate->getSearch(); ?>"
+                                        data-required="S">
+
+                                    <button class="btn btn-outline-secondary" id="btnSearch" type="button" onclick='validateForm("#frmSearch", `{"request": {"path" : "view/files/files_index"},
+                                                                                                        "loader" : {"type" : 1, "target" : "btnSearch"}, 
+                                                                                                        "response" : {"target" : "app-main"},
+                                                                                                        "form" : "frmSearch"}`)'>
+
+
+                                        <i class="bi bi-search"></i>
+
+                                    </button>
+
+                                </div>
+
+                            </div>
+                    
                         </div>
 
                     </form>
@@ -122,235 +175,252 @@ try {
 
                         <div class="table-responsive">
 
-                            <table class="table table-hover">
+                            <?php
+                            /** Verifica se existem registros */
+                            if ($rows <= 0) { ?>
 
-                                <thead>
+                                <div class="alert alert-info text-center m-5 p-5">
 
-                                    <tr>
+                                    <h3 class="text-center">Nenhum arquivo localizado</h3>
 
-                                        <th scope="col" class="text-center">
+                                    <p class="text-center">Para enviar arquivos, clique no botão <strong>Enviar Arquivos</strong>.</p>
 
-                                            #
+                                </div>
 
-                                        </th>
+                            <?php } else { ?>
 
-                                        <th scope="col" class="text-center">
 
-                                            Cadastro
+                                <table class="table table-hover">
 
-                                        </th>
+                                    <thead>
 
-                                        <th scope="col" class="text-center">
+                                        <tr>
 
-                                            Status
+                                            <th scope="col" class="text-center">
 
-                                        </th>
+                                                #
 
-                                        <th scope="col" class="text-center">
+                                            </th>
 
-                                            Extensão
+                                            <th scope="col" class="text-center">
 
-                                        </th>
+                                                Cadastro
 
-                                        <th scope="col" class="text-center">
+                                            </th>
 
-                                            Lote
+                                            <th scope="col" class="text-center">
 
-                                        </th>
+                                                Status
 
-                                        <th scope="col" class="text-center">
+                                            </th>
 
-                                            Nome
+                                            <th scope="col" class="text-center">
 
-                                        </th>
+                                                Extensão
 
-                                        <th scope="col" class="text-center">
+                                            </th>
 
+                                            <th scope="col" class="text-center">
 
+                                                Lote
 
-                                        </th>
+                                            </th>
 
-                                    </tr>
+                                            <th scope="col" class="text-center">
 
-                                </thead>
+                                                Nome
 
-                                <tbody>
+                                            </th>
 
-                                    <?php
+                                            <th scope="col" class="text-center">
 
-                                    /** Percorro todos os itens localizados */
-                                    foreach ($FilesResult as $key => $result) { ?>
 
-                                        <tr class="align-middle border-top" id="<?php echo $result->file_id ?>">
 
-                                            <td scope="row" class="text-center" width="90">
-
-                                                <?php echo $result->file_id ?>
-
-                                            </td>
-
-                                            <td scope="row" class="text-center" width="90">
-
-                                                <?php echo date('d/m/Y', strtotime($result->date_create)) ?>
-
-                                            </td>
-
-                                            <td scope="row" class="text-center" width="90">
-
-                                                <span class="badge text-bg-<?php echo $result->status == 'A' ? 'success' : 'danger'; ?>"><?php echo $result->status == 'A' ? 'Ativo' : 'Inativo'; ?></span>
-
-                                            </td>
-
-                                            <td scope="row" class="text-center" width="90">
-                                                <?php
-                                                echo !empty($result->extension) ? '<image src="assets/images/default/files/' . $result->extension . '.png" width="60" height="60">' : '...';
-                                                ?>
-                                            </td>
-
-                                            <td scope="row" class="text-center" width="90">
-                                                <?php echo !empty($result->batch) ? $result->batch : '...'; ?>
-
-                                            </td>
-
-
-                                            <td class="text-wrap">
-                                                <?php echo $result->name ?>
-
-                                            </td>
-
-                                            <td class="text-center" class="text-center" width="60">
-
-                                                <div class="dropdown">
-
-                                                    <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-
-                                                        <i class="bi bi-three-dots"></i>
-
-                                                    </button>
-
-                                                    <ul class="dropdown-menu shadow-sm">
-
-                                                        <li>
-
-                                                            <a class="dropdown-item" onclick='new Request({"request": {"path" : "view/files/files_preview"}, 
-                                                                                                           "params" : {"file_id" : "<?php echo $result->file_id ?>"}, 
-                                                                                                           "loader" : {"type" : 3}})'>
-
-                                                                <i class="bi bi-eye me-1"></i>Visualizar
-
-                                                            </a>
-
-                                                        </li>
-
-                                                        <?php
-
-                                                        /** Verifica o tipo de 
-                                                         * extensão foi informado */
-                                                        if (!empty($result->extension)) {
-
-                                                            /** Verifica se o arquivo é uma imagem */
-                                                            if (in_array(strtolower($result->extension), $Main->getExtensionImage())) { ?>
-
-                                                                <li>
-
-                                                                    <a class="dropdown-item" onclick='new Request({"request": {"path" : "action/files/files_convert"}, 
-                                                                                                                   "params" : {"file_id" : "<?php echo $result->file_id ?>", "convert" : "image_to_word"}, 
-                                                                                                                   "loader" : {"type" : 3}})'>
-
-                                                                        <i class="bi bi-filetype-docx me-1"></i>Converter para Word
-
-                                                                    </a>
-
-                                                                </li>
-
-                                                                <li>
-
-                                                                    <a class="dropdown-item" onclick='new Request({"request": {"path" : "action/files/files_convert"}, 
-                                                                                                                   "params" : {"file_id" : "<?php echo $result->file_id ?>", "convert" : "image_to_text"}, 
-                                                                                                                   "loader" : {"type" : 3}})'>
-
-                                                                        <i class="bi bi-filetype-txt me-1"></i>Converter para Texto
-
-                                                                    </a>
-
-                                                                </li>
-                                                            <?php
-                                                                /** Verifica se o arquivo é PDF */
-                                                            } elseif (strtolower($result->extension) == 'pdf') { ?>
-
-                                                                <li>
-
-                                                                    <a class="dropdown-item" onclick='new Request({"request": {"path" : "action/files/files_convert"}, 
-                                                                                                                   "params" : {"file_id" : "<?php echo $result->file_id ?>", "convert" : "pdf_to_word"}, 
-                                                                                                                   "loader" : {"type" : 3}})'>
-
-                                                                        <i class="bi bi-filetype-docx me-1"></i>Converter para Word
-
-                                                                    </a>
-
-                                                                </li>
-
-                                                                <li>
-
-                                                                    <a class="dropdown-item" onclick='new Request({"request": {"path" : "action/files/files_convert"}, 
-                                                                                                                   "params" : {"file_id" : "<?php echo $result->file_id ?>", "convert" : "pdf_to_text"}, 
-                                                                                                                   "loader" : {"type" : 3}})'>
-
-                                                                        <i class="bi bi-filetype-txt me-1"></i>Converter para Texto
-
-                                                                    </a>
-
-                                                                </li>
-
-                                                        <?php
-                                                            }
-                                                        }
-
-                                                        ?>
-
-                                                        <li>
-
-                                                            <a class="dropdown-item" onclick='new Request({"request": {"path" : "view/files/files_details"}, 
-                                                                                                                                "params" : {"file_id" : "<?php echo $result->file_id ?>"}, 
-                                                                                                                                "loader" : {"type" : 3}})'>
-
-                                                                <i class="bi bi-search me-1"></i>Detalhes
-
-                                                            </a>
-
-                                                        </li>
-
-                                                        <li>
-
-                                                            <script>
-                                                                var procedure<?php echo $result->file_id ?> = "new Request({'request' : {'path' : 'action/files/files_delete'}, 'params' : {'file_id' : '<?php echo $result->file_id ?>'}, 'loader' : {'type' : 3}})";
-                                                            </script>                                                        
-
-                                                            <a class="dropdown-item" onclick="new Modal({ title: 'Atenção', 
-                                                                                                          data: '<h3 class=\'text-center\'>Deseja realmente excluir este arquivo <?php echo $result->name ?>?</h3>', 
-                                                                                                          size: 'small', 
-                                                                                                          type: 'bi bi-trash', 
-                                                                                                          procedure: procedure<?php echo $result->file_id ?> });">
-
-                                                                <i class="bi bi-trash me-1"></i>Remover
-
-                                                            </a>                                                        
-
-                                                        </li>
-
-                                                    </ul>
-
-                                                </div>
-
-                                            </td>
+                                            </th>
 
                                         </tr>
 
-                                    <?php } ?>
+                                    </thead>
 
-                                </tbody>
+                                    <tbody>
 
-                            </table>
+                                        <?php
+
+                                        /** Percorro todos os itens localizados */
+                                        foreach ($FilesResult as $key => $result) { ?>
+
+                                            <tr class="align-middle border-top" id="<?php echo $result->file_id ?>">
+
+                                                <td scope="row" class="text-center" width="90">
+
+                                                    <?php echo $result->file_id ?>
+
+                                                </td>
+
+                                                <td scope="row" class="text-center" width="90">
+
+                                                    <?php echo date('d/m/Y', strtotime($result->date_create)) ?>
+
+                                                </td>
+
+                                                <td scope="row" class="text-center" width="90">
+
+                                                    <span class="badge text-bg-<?php echo $result->status == 'A' ? 'success' : 'danger'; ?>"><?php echo $result->status == 'A' ? 'Ativo' : 'Inativo'; ?></span>
+
+                                                </td>
+
+                                                <td scope="row" class="text-center" width="90">
+                                                    <?php
+                                                    echo !empty($result->extension) ? '<image src="assets/images/default/files/' . $result->extension . '.png" width="60" height="60">' : '...';
+                                                    ?>
+                                                </td>
+
+                                                <td scope="row" class="text-center" width="90">
+                                                    <?php echo !empty($result->batch) ? $result->batch : '...'; ?>
+
+                                                </td>
+
+
+                                                <td class="text-wrap">
+                                                    <?php echo $result->name ?>
+
+                                                </td>
+
+                                                <td class="text-center" class="text-center" width="60">
+
+                                                    <div class="dropdown">
+
+                                                        <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+
+                                                            <i class="bi bi-three-dots"></i>
+
+                                                        </button>
+
+                                                        <ul class="dropdown-menu shadow-sm">
+
+                                                            <li>
+
+                                                                <a class="dropdown-item" onclick='new Request({"request": {"path" : "view/files/files_preview"}, 
+                                                                                                            "params" : {"file_id" : "<?php echo $result->file_id ?>"}, 
+                                                                                                            "loader" : {"type" : 3}})'>
+
+                                                                    <i class="bi bi-eye me-1"></i>Visualizar
+
+                                                                </a>
+
+                                                            </li>
+
+                                                            <?php
+
+                                                            /** Verifica o tipo de 
+                                                             * extensão foi informado */
+                                                            if (!empty($result->extension)) {
+
+                                                                /** Verifica se o arquivo é uma imagem */
+                                                                if (in_array(strtolower($result->extension), $Main->getExtensionImage())) { ?>
+
+                                                                    <li>
+
+                                                                        <a class="dropdown-item" onclick='new Request({"request": {"path" : "action/files/files_convert"}, 
+                                                                                                                    "params" : {"file_id" : "<?php echo $result->file_id ?>", "convert" : "image_to_word"}, 
+                                                                                                                    "loader" : {"type" : 3}})'>
+
+                                                                            <i class="bi bi-filetype-docx me-1"></i>Converter para Word
+
+                                                                        </a>
+
+                                                                    </li>
+
+                                                                    <li>
+
+                                                                        <a class="dropdown-item" onclick='new Request({"request": {"path" : "action/files/files_convert"}, 
+                                                                                                                    "params" : {"file_id" : "<?php echo $result->file_id ?>", "convert" : "image_to_text"}, 
+                                                                                                                    "loader" : {"type" : 3}})'>
+
+                                                                            <i class="bi bi-filetype-txt me-1"></i>Converter para Texto
+
+                                                                        </a>
+
+                                                                    </li>
+                                                                <?php
+                                                                    /** Verifica se o arquivo é PDF */
+                                                                } elseif (strtolower($result->extension) == 'pdf') { ?>
+
+                                                                    <li>
+
+                                                                        <a class="dropdown-item" onclick='new Request({"request": {"path" : "action/files/files_convert"}, 
+                                                                                                                    "params" : {"file_id" : "<?php echo $result->file_id ?>", "convert" : "pdf_to_word"}, 
+                                                                                                                    "loader" : {"type" : 3}})'>
+
+                                                                            <i class="bi bi-filetype-docx me-1"></i>Converter para Word
+
+                                                                        </a>
+
+                                                                    </li>
+
+                                                                    <li>
+
+                                                                        <a class="dropdown-item" onclick='new Request({"request": {"path" : "action/files/files_convert"}, 
+                                                                                                                    "params" : {"file_id" : "<?php echo $result->file_id ?>", "convert" : "pdf_to_text"}, 
+                                                                                                                    "loader" : {"type" : 3}})'>
+
+                                                                            <i class="bi bi-filetype-txt me-1"></i>Converter para Texto
+
+                                                                        </a>
+
+                                                                    </li>
+
+                                                            <?php
+                                                                }
+                                                            }
+
+                                                            ?>
+
+                                                            <li>
+
+                                                                <a class="dropdown-item" onclick='new Request({"request": {"path" : "view/files/files_details"}, 
+                                                                                                                                    "params" : {"file_id" : "<?php echo $result->file_id ?>"}, 
+                                                                                                                                    "loader" : {"type" : 3}})'>
+
+                                                                    <i class="bi bi-search me-1"></i>Detalhes
+
+                                                                </a>
+
+                                                            </li>
+
+                                                            <li>
+
+                                                                <script>
+                                                                    var procedure<?php echo $result->file_id ?> = "new Request({'request' : {'path' : 'action/files/files_delete'}, 'params' : {'file_id' : '<?php echo $result->file_id ?>'}, 'loader' : {'type' : 3}})";
+                                                                </script>                                                        
+
+                                                                <a class="dropdown-item" onclick="new Modal({ title: 'Atenção', 
+                                                                                                            data: '<h3 class=\'text-center\'>Deseja realmente excluir este arquivo <?php echo $result->name ?>?</h3>', 
+                                                                                                            size: 'small', 
+                                                                                                            type: 'bi bi-trash', 
+                                                                                                            procedure: procedure<?php echo $result->file_id ?> });">
+
+                                                                    <i class="bi bi-trash me-1"></i>Remover
+
+                                                                </a>                                                        
+
+                                                            </li>
+
+                                                        </ul>
+
+                                                    </div>
+
+                                                </td>
+
+                                            </tr>
+
+                                        <?php } ?>
+
+                                    </tbody>
+
+                                </table>
+
+                            <?php } ?>
 
                         </div>
                     </div>

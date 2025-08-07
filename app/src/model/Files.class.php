@@ -245,7 +245,8 @@ class Files
     public function All(
         ?int $start,
         ?int $max,
-        ?string $search
+        ?string $search,
+        ?int $batchId
     ): array {
 
         /** Parametros de entrada */
@@ -360,11 +361,13 @@ class Files
 
     /** Retorna a quantidade de arquivos */
     public function Count(
-        ?string $search
+        ?string $search,
+        ?int $batchId
     ): int {
 
         /** Parametros de entrada */
         $this->search = !empty($search) ? '%' . $search . '%' : null;
+        $this->batchId = $batchId > 0 ? (int)$batchId : 0;
 
         /** Consulta SQL. */
         $this->sql = 'select COUNT(f.file_id) as qtde 
@@ -377,6 +380,12 @@ class Files
             $this->sql .= ' and name like(:name)';
         }
 
+        /** Verifica se o batch foi informado */
+        if($this->batchId > 0) {
+
+            $this->sql .= ' and batch_id =  :batch_id';
+        }
+
         /** Prepara a consulta SQL utilizando a conexão estabelecida. */
         $this->stmt = $this->connection->prepare($this->sql);
 
@@ -386,6 +395,13 @@ class Files
             /** Preencho os parâmetros do SQL */
             $this->stmt->bindParam(':name', $this->search);
         }
+
+        /** Verifica se o batch foi informado */
+        if($this->batchId > 0) {
+
+            /** Preencho os parâmetros do SQL */
+            $this->stmt->bindParam(':batch_id', $this->batchId);
+        }        
 
         /** Executa a consulta SQL. */
         $this->stmt->execute();

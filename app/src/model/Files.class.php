@@ -308,6 +308,13 @@ class Files
             $this->stmt->bindParam(':name', $this->search);
         }
 
+        /** Verifica se o batch foi informado */
+        if($this->batchId > 0) {
+
+            /** Preencho os parâmetros do SQL */
+            $this->stmt->bindParam(':batch_id', $this->batchId);
+        }          
+
         /** Executa a consulta SQL. */
         $this->stmt->execute();
 

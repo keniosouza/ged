@@ -259,67 +259,74 @@ class Files
             $this->limit = " limit $this->start, $this->max";
         }
 
-        /** Consulta SQL. */
-        $this->sql = 'select f.file_id,
-                             f.company_id,
-                             f.folder_id,
-                             f.file_category_id,
-                             f.user_id,
-                             f.batch_id,
-                             f.table,
-                             f.name,
-                             f.description,
-                             f.extension,
-                             f.path,
-                             f.content,
-                             f.tags,
-                             f.date_create,
-                             f.date_update,
-                             f.user_id_create,
-                             f.user_id_update,
-                             f.status,
-                             b.description as batch 
-                      from files f 
-                      left join batchs b on f.batch_id = b.batch_id
-                      where f.status <> \'D\'';
+        try{
 
-        /** Verifica se a consulta foi informada */
-        if (!empty($this->search)) {
+            /** Consulta SQL. */
+            $this->sql = 'select f.file_id,
+                                f.company_id,
+                                f.folder_id,
+                                f.file_category_id,
+                                f.user_id,
+                                f.batch_id,
+                                f.table,
+                                f.name,
+                                f.description,
+                                f.extension,
+                                f.path,
+                                f.content,
+                                f.tags,
+                                f.date_create,
+                                f.date_update,
+                                f.user_id_create,
+                                f.user_id_update,
+                                f.status,
+                                b.description as batch 
+                        from files f 
+                        left join batchs b on f.batch_id = b.batch_id
+                        where f.status <> \'D\'';
 
-            $this->sql .= ' and name like(:name)';
-        }
+            /** Verifica se a consulta foi informada */
+            if (!empty($this->search)) {
 
-        /** Verifica se o batch foi informado */
-        if($this->batchId > 0) {
+                $this->sql .= ' and f.name like(:name)';
+            }
 
-            $this->sql .= ' and batch_id =  :batch_id';
-        }        
+            /** Verifica se o batch foi informado */
+            if($this->batchId > 0) {
 
-        /** Informa a limitação de registros */
-        $this->sql .= $this->limit;
+                $this->sql .= ' and f.batch_id =  :batch_id';
+            }        
 
-        /** Prepara a consulta SQL utilizando a conexão estabelecida. */
-        $this->stmt = $this->connection->prepare($this->sql);
+            /** Informa a limitação de registros */
+            $this->sql .= $this->limit;
 
-        /** Verifica se a consulta foi informada */
-        if (!empty($this->search)) {
+            /** Prepara a consulta SQL utilizando a conexão estabelecida. */
+            $this->stmt = $this->connection->prepare($this->sql);
 
-            /** Preencho os parâmetros do SQL */
-            $this->stmt->bindParam(':name', $this->search);
-        }
+            /** Verifica se a consulta foi informada */
+            if (!empty($this->search)) {
 
-        /** Verifica se o batch foi informado */
-        if($this->batchId > 0) {
+                /** Preencho os parâmetros do SQL */
+                $this->stmt->bindParam(':name', $this->search);
+            }
 
-            /** Preencho os parâmetros do SQL */
-            $this->stmt->bindParam(':batch_id', $this->batchId);
-        }          
+            /** Verifica se o batch foi informado */
+            if($this->batchId > 0) {
 
-        /** Executa a consulta SQL. */
-        $this->stmt->execute();
+                /** Preencho os parâmetros do SQL */
+                $this->stmt->bindParam(':batch_id', $this->batchId);
+            }          
 
-        /** Retorna o resultado da consulta como um array de objetos. */
-        return $this->stmt->fetchAll(\PDO::FETCH_OBJ);
+            /** Executa a consulta SQL. */
+            $this->stmt->execute();
+
+            /** Retorna o resultado da consulta como um array de objetos. */
+            return $this->stmt->fetchAll(\PDO::FETCH_OBJ);
+
+        } catch (PDOException $e) {
+
+            throw new InvalidArgumentException($e->getMessage().' :: '.$this->sql, 0);
+        }             
     }
 
     /** Retorna os placeholders */
@@ -382,45 +389,52 @@ class Files
         $this->search = !empty($search) ? '%' . $search . '%' : null;
         $this->batchId = $batchId > 0 ? (int)$batchId : 0;
 
-        /** Consulta SQL. */
-        $this->sql = 'select COUNT(f.file_id) as qtde 
-                      from files f
-                      where f.status <> \'D\'';
+        try{
 
-        /** Verifica se a consulta foi informada */
-        if (!empty($this->search)) {
+            /** Consulta SQL. */
+            $this->sql = 'select COUNT(f.file_id) as qtde 
+                        from files f
+                        where f.status <> \'D\'';
 
-            $this->sql .= ' and name like(:name)';
-        }
+            /** Verifica se a consulta foi informada */
+            if (!empty($this->search)) {
 
-        /** Verifica se o batch foi informado */
-        if($this->batchId > 0) {
+                $this->sql .= ' and name like(:name)';
+            }
 
-            $this->sql .= ' and batch_id =  :batch_id';
-        }
+            /** Verifica se o batch foi informado */
+            if($this->batchId > 0) {
 
-        /** Prepara a consulta SQL utilizando a conexão estabelecida. */
-        $this->stmt = $this->connection->prepare($this->sql);
+                $this->sql .= ' and batch_id =  :batch_id';
+            }
 
-        /** Verifica se a consulta foi informada */
-        if (!empty($this->search)) {
+            /** Prepara a consulta SQL utilizando a conexão estabelecida. */
+            $this->stmt = $this->connection->prepare($this->sql);
 
-            /** Preencho os parâmetros do SQL */
-            $this->stmt->bindParam(':name', $this->search);
-        }
+            /** Verifica se a consulta foi informada */
+            if (!empty($this->search)) {
 
-        /** Verifica se o batch foi informado */
-        if($this->batchId > 0) {
+                /** Preencho os parâmetros do SQL */
+                $this->stmt->bindParam(':name', $this->search);
+            }
 
-            /** Preencho os parâmetros do SQL */
-            $this->stmt->bindParam(':batch_id', $this->batchId);
-        }        
+            /** Verifica se o batch foi informado */
+            if($this->batchId > 0) {
 
-        /** Executa a consulta SQL. */
-        $this->stmt->execute();
+                /** Preencho os parâmetros do SQL */
+                $this->stmt->bindParam(':batch_id', $this->batchId);
+            }        
 
-        /** Retorna o resultado da consulta como um array de objetos. */
-        return (int)$this->stmt->fetchObject()->qtde;
+            /** Executa a consulta SQL. */
+            $this->stmt->execute();
+
+            /** Retorna o resultado da consulta como um array de objetos. */
+            return (int)$this->stmt->fetchObject()->qtde;
+
+        } catch (PDOException $e) {
+
+            throw new InvalidArgumentException($e->getMessage().' :: '.$this->sql, 0);
+        }            
     }
 
     /** Localiza um usuário pelo e-mail e senha */

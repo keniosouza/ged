@@ -64,10 +64,10 @@ if (!is_null($newPassword) && !is_null($hash)) {
 
     <title>DOCVERSO || Tela de Acesso</title>
 
-    <link rel="shortcut icon" type="image/x-icon" href="<?php echo $Main->getUrlApp(); ?>/assets/images/favicon.ico">
-    <link rel="stylesheet" type="text/css" href="<?php echo $Main->getUrlApp(); ?>/assets/css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="<?php echo $Main->getUrlApp(); ?>/assets/vendors/css/vendors.min.css">
-    <link rel="stylesheet" type="text/css" href="<?php echo $Main->getUrlApp(); ?>/assets/css/theme.min.css">
+    <link rel="shortcut icon" type="image/x-icon" href="<?php echo $Main->getUrlApp(); ?>assets/images/favicon.ico">
+    <link rel="stylesheet" type="text/css" href="<?php echo $Main->getUrlApp(); ?>assets/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="<?php echo $Main->getUrlApp(); ?>assets/vendors/css/vendors.min.css">
+    <link rel="stylesheet" type="text/css" href="<?php echo $Main->getUrlApp(); ?>assets/css/theme.min.css">
 
 </head>
 

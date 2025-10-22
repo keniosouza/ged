@@ -58,11 +58,11 @@ $Main->checkSession();
     <script src="./assets/src/utils/loader.js"></script>
     <script src="./assets/src/utils/modal.js"></script>
     <script src="./assets/src/utils/toast.js"></script>
-    <script src="./assets/src/services/file.js"></script>
-    <script src="./assets/src/services/response.js"></script>
-    <script src="./assets/src/services/router.js"></script>
-    <script src="./assets/src/utils/offcanva.js"></script>
-    <script src="./assets/src/utils/main.js"></script>
+    <script src="./assets/src/services/file.js?<?php echo filemtime('./assets/src/services/file.js');?>"></script>
+    <script src="./assets/src/services/response.js?<?php echo filemtime('./assets/src/services/response.js');?>"></script>
+    <script src="./assets/src/services/router.js?<?php echo filemtime('./assets/src/services/router.js');?>"></script>
+    <script src="./assets/src/utils/offcanva.js?<?php echo filemtime('./assets/src/utils/offcanva.js');?>"></script>
+    <script src="./assets/src/utils/main.js?<?php echo filemtime('./assets/src/utils/main.js');?>"></script>
 
     <!-- Carrega o conteúdo inicial -->
     <script>

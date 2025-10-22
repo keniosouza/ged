@@ -2,7 +2,7 @@
 class Request {
 
     /** Método construtor */
-    constructor(data, path = null) {
+    constructor(data, path = '') {
 
         /** Parâmetros da classe */
         this._data = data;
@@ -147,6 +147,7 @@ class Request {
     /** Função para executar mudanças de páginas */
     send() {
 
+		//
 
         /** Verifica se o target foi informado */
         if (this._data.response?.target) {
@@ -203,7 +204,7 @@ class Request {
             }
 
             /** Url para envio */
-            fetch((this._path !== null ? this._path + '/' : '') + 'router.php', this.setHeader(this._data.request))
+            fetch((this._path !== '' ? this._path + '/' : '') + 'router.php', this.setHeader(this._data.request))
 
                 /** Fetch do objeto */
                 .then(response => response.json())

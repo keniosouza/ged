@@ -214,7 +214,7 @@ if (!is_null($newPassword) && !is_null($hash)) {
                                             <button id="UsersBtnLogin" class="btn btn-lg btn-primary w-100" onclick='new Request({"request": {"path" : "action/users/users_login"}, 
                                                                                                                                   "loader" : {"type" : 1, "target" : "UsersBtnLogin"}, 
                                                                                                                                   "form" : "UsersLoginForm", 
-                                                                                                                                  "response" : {"target" : "UsersLoginFormResponse"}}, "app")'>
+                                                                                                                                  "response" : {"target" : "UsersLoginFormResponse"}}, "")'>
                                                 Autenticar Usuário
                                             </button>
                                         </div>
@@ -241,9 +241,12 @@ if (!is_null($newPassword) && !is_null($hash)) {
                                                 <button class="btn btn-light w-100" id="btnReset" onclick='validateForm("#UsersLoginForm", `{"request": {"path" : "action/users/users_reset"}, 
                                                                                                                         "loader" : {"type" : 1, "target" : "UsersResetFormResponse"}, 
                                                                                                                         "form" : "UsersLoginForm", 
-                                                                                                                        "response" : {"target" : "UsersResetFormResponse"}}`, "app")'>
+                                                                                                                        "response" : {"target" : "UsersResetFormResponse"}}`, "")'>
                                                     Solicitar nova senha
                                                 </button>
+												
+												
+												
                                                 <span id="UsersResetFormResponse"></span>
                                             </div>
 
@@ -267,13 +270,13 @@ if (!is_null($newPassword) && !is_null($hash)) {
     <script src="<?php echo $Main->getUrlApp(); ?>assets/js/theme-customizer-init.min.js"></script>
     <script src="<?php echo $Main->getUrlApp(); ?>assets/js/jquery.mask.min.js"></script>
     <script src="<?php echo $Main->getUrlApp(); ?>assets/js/jquery.price.format.js"></script>
-    <script src="<?php echo $Main->getUrlApp(); ?>assets/src/utils/loader.js"></script>
-    <script src="<?php echo $Main->getUrlApp(); ?>assets/src/utils/modal.js"></script>
-    <script src="<?php echo $Main->getUrlApp(); ?>assets/src/utils/toast.js"></script>
-    <script src="<?php echo $Main->getUrlApp(); ?>assets/src/services/response.js"></script>
-    <script src="<?php echo $Main->getUrlApp(); ?>assets/src/services/router.js"></script>
+    <script src="<?php echo $Main->getUrlApp(); ?>assets/src/utils/loader.js?<?php echo filemtime('app/assets/src/utils/loader.js');?>"></script>
+    <script src="<?php echo $Main->getUrlApp(); ?>assets/src/utils/modal.js?<?php echo filemtime('app/assets/src/utils/modal.js');?>"></script>
+    <script src="<?php echo $Main->getUrlApp(); ?>assets/src/utils/toast.js?<?php echo filemtime('app/assets/src/utils/toast.js');?>"></script>
+    <script src="<?php echo $Main->getUrlApp(); ?>assets/src/services/response.js?<?php echo filemtime('app/assets/src/services/response.js');?>"></script>
+    <script src="<?php echo $Main->getUrlApp(); ?>assets/src/services/router.js?<?php echo filemtime('app/assets/src/services/router.js');?>"></script>
     <script src="<?php echo $Main->getUrlApp(); ?>assets/src/utils/offcanva.js"></script>
-    <script src="<?php echo $Main->getUrlApp(); ?>assets/src/utils/main.js"></script>
+    <script src="<?php echo $Main->getUrlApp(); ?>assets/src/utils/main.js?<?php echo filemtime('app/assets/src/utils/main.js');?>"></script>
 
     <script type="text/javascript">
         /** Operações ao carregar a página */

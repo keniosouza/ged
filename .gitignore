@@ -9,3 +9,7 @@ config
 
 # Ignora arquivo de configuração
 #app/config/
+
+
+# Ignora arquivo de sessão
+sessions/

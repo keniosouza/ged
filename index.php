@@ -54,7 +54,7 @@ if (!is_null($newPassword) && !is_null($hash)) {
 <html lang="pt-br">
 
 <head>
-    <base href="<?php echo str_replace('app/', '', $Main->getUrlApp()); ?>" />
+    <base href="<?php echo $Main->getUrlApp(); ?>" />
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -64,10 +64,10 @@ if (!is_null($newPassword) && !is_null($hash)) {
 
     <title>DOCVERSO || Tela de Acesso</title>
 
-    <link rel="shortcut icon" type="image/x-icon" href="<?php echo str_replace('app/', '', $Main->getUrlApp()); ?>/app/assets/images/favicon.ico">
-    <link rel="stylesheet" type="text/css" href="<?php echo str_replace('app/', '', $Main->getUrlApp()); ?>/app/assets/css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="<?php echo str_replace('app/', '', $Main->getUrlApp()); ?>/app/assets/vendors/css/vendors.min.css">
-    <link rel="stylesheet" type="text/css" href="<?php echo str_replace('app/', '', $Main->getUrlApp()); ?>/app/assets/css/theme.min.css">
+    <link rel="shortcut icon" type="image/x-icon" href="<?php echo $Main->getUrlApp(); ?>/app/assets/images/favicon.ico">
+    <link rel="stylesheet" type="text/css" href="<?php echo $Main->getUrlApp(); ?>/app/assets/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="<?php echo $Main->getUrlApp(); ?>/app/assets/vendors/css/vendors.min.css">
+    <link rel="stylesheet" type="text/css" href="<?php echo $Main->getUrlApp(); ?>/app/assets/css/theme.min.css">
 
 </head>
 
@@ -263,18 +263,18 @@ if (!is_null($newPassword) && !is_null($hash)) {
 
     <?php } ?>
 
-    <script src="<?php echo str_replace('app/', '', $Main->getUrlApp()); ?>app/assets/vendors/js/vendors.min.js"></script>
-    <script src="<?php echo str_replace('app/', '', $Main->getUrlApp()); ?>app/assets/js/common-init.min.js"></script>
-    <script src="<?php echo str_replace('app/', '', $Main->getUrlApp()); ?>app/assets/js/theme-customizer-init.min.js"></script>
-    <script src="<?php echo str_replace('app/', '', $Main->getUrlApp()); ?>app/assets/js/jquery.mask.min.js"></script>
-    <script src="<?php echo str_replace('app/', '', $Main->getUrlApp()); ?>app/assets/js/jquery.price.format.js"></script>
-    <script src="<?php echo str_replace('app/', '', $Main->getUrlApp()); ?>app/assets/src/utils/loader.js"></script>
-    <script src="<?php echo str_replace('app/', '', $Main->getUrlApp()); ?>app/assets/src/utils/modal.js"></script>
-    <script src="<?php echo str_replace('app/', '', $Main->getUrlApp()); ?>app/assets/src/utils/toast.js"></script>
-    <script src="<?php echo str_replace('app/', '', $Main->getUrlApp()); ?>app/assets/src/services/response.js"></script>
-    <script src="<?php echo str_replace('app/', '', $Main->getUrlApp()); ?>app/assets/src/services/router.js"></script>
-    <script src="<?php echo str_replace('app/', '', $Main->getUrlApp()); ?>app/assets/src/utils/offcanva.js"></script>
-    <script src="<?php echo str_replace('app/', '', $Main->getUrlApp()); ?>app/assets/src/utils/main.js"></script>
+    <script src="<?php echo $Main->getUrlApp(); ?>app/assets/vendors/js/vendors.min.js"></script>
+    <script src="<?php echo $Main->getUrlApp(); ?>app/assets/js/common-init.min.js"></script>
+    <script src="<?php echo $Main->getUrlApp(); ?>app/assets/js/theme-customizer-init.min.js"></script>
+    <script src="<?php echo $Main->getUrlApp(); ?>app/assets/js/jquery.mask.min.js"></script>
+    <script src="<?php echo $Main->getUrlApp(); ?>app/assets/js/jquery.price.format.js"></script>
+    <script src="<?php echo $Main->getUrlApp(); ?>app/assets/src/utils/loader.js"></script>
+    <script src="<?php echo $Main->getUrlApp(); ?>app/assets/src/utils/modal.js"></script>
+    <script src="<?php echo $Main->getUrlApp(); ?>app/assets/src/utils/toast.js"></script>
+    <script src="<?php echo $Main->getUrlApp(); ?>app/assets/src/services/response.js"></script>
+    <script src="<?php echo $Main->getUrlApp(); ?>app/assets/src/services/router.js"></script>
+    <script src="<?php echo $Main->getUrlApp(); ?>app/assets/src/utils/offcanva.js"></script>
+    <script src="<?php echo $Main->getUrlApp(); ?>app/assets/src/utils/main.js"></script>
 
     <script type="text/javascript">
         /** Operações ao carregar a página */

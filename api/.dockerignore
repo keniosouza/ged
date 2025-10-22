@@ -1,0 +1,31 @@
+# Ignora ambientes virtuais
+venv/
+.venv/
+
+# Ignora arquivos compilados do Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Ignora arquivos temporários do sistema
+*.swp
+*.swo
+*.bak
+*.tmp
+.DS_Store
+Thumbs.db
+
+# Ignora arquivos de log e banco local
+*.log
+*.sqlite3
+
+# Ignora arquivos de cache do pip
+pip-wheel-metadata/
+*.egg-info/
+dist/
+build/
+
+# Ignora arquivos de configuração pessoais
+.env
+*.env

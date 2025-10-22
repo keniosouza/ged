@@ -162,7 +162,6 @@ if (!is_null($newPassword) && !is_null($hash)) {
     <?php
 
     } else {
-
     ?>
         <main class="auth-creative-wrapper">
             <div class="auth-creative-inner">

@@ -59,6 +59,7 @@ class Request {
             /** Defino o cabeçalho da requisição */
             headers: {
 
+
                 /** Converto a string para parâmetros de url */
                 "Content-Type": "application/x-www-form-urlencoded",
 

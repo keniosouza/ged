@@ -311,7 +311,7 @@ function viewJson(title, jsonData) {
 }
 
 /** Verifica campos obrigatórios antes de enviar o formulário */
-function validateForm(form, jsonData, dir = null) {
+function validateForm(form, jsonData, dir = '') {
 
     /** Controles */
     var err = 0;

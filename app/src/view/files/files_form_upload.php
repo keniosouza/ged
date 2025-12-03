@@ -92,7 +92,7 @@ try {
                                         "target": "FilesFormWrapper"
                                     },
                                     "form": null
-                                }, null)
+                                }, '')
                             </script>
 
                         </div>

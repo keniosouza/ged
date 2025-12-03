@@ -13,3 +13,4 @@ config
 
 # Ignora arquivo de sessão
 sessions/"sessions/" 
+sessions/

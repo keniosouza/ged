@@ -140,7 +140,7 @@ if (!is_null($newPassword) && !is_null($hash)) {
                                     <button type="button" id="btnSavePassword" class="btn btn-lg btn-primary w-100" onclick='validateForm("#UsersLoginForm", `{"request": {"path" : "action/users/users_save_new_password"}, 
                                                                                                                                           "loader" : {"type" : 1, "target" : "btnSavePassword"}, 
                                                                                                                                           "form" : "UsersNewPassForm", 
-                                                                                                                                          "response" : {"target" : "UsersResetFormResponse"}}`, "app")'>
+                                                                                                                                          "response" : {"target" : "UsersResetFormResponse"}}`, "")'>
                                         CADASTRAR SENHA
                                     </button>
                                 </div>
